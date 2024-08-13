@@ -17,12 +17,11 @@
 <form action="/work" method="get">
     Поиск оснастки: <input type="text" name="title"> <br>
     <input type = "submit" value="Поиск"/>
-    <br>
-
+    <br><br>
 </form>
-<#list works as work>
+<div>
     <table class="table">
-            <thead class="table-success">
+        <thead class="table-success">
             <tr>
                 <th scope="col">Наименование оснастки</th>
                 <th scope="col">Примечание</th>
@@ -31,21 +30,23 @@
                 <th scope="col">Склад</th>
                 <th scope="col">Детально</th>
             </tr>
-            </thead>
-        <tbody class="table-light">
+        </thead>
+        <#list works as work>
+            <tbody class="table-light">
         <tr>
             <th scope="row">${work.designation}</th>
-            <th scope="row"${work.notes}</th>
+            <th scope="row">${work.notes}</th>
             <th scope="row">${work.address}</th>
             <th scope="row">${work.qty}</th>
             <th scope="row">${work.storage}</th>
             <th scope="row"><a href="/work/${work.id}">Подробнее...</a> </th>
         </tr>
-        </tbody>
-    </table>
+            </tbody>
 <#else>
     <h3>Оснастки нет</h3>
 </#list>
+    </table>
+</div>
 <hr>
 <h3>Добавить новую оснастку</h3>
 <form action="/work/create" method="post">
