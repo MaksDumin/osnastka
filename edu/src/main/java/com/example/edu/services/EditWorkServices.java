@@ -15,7 +15,7 @@ public class EditWorkServices {
     private final WorkRepository workRepository;
 
     public List<Work> listWork (String designation) {
-        if (designation != null) return workRepository.findByDesignation(designation);
+        if (designation != null) return workRepository.findByDesignationStartingWith(designation);
         return workRepository.findAll();
     }
 
