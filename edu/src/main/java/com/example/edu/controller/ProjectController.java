@@ -21,8 +21,9 @@ public class ProjectController {
     }
 
     @GetMapping ("/")
-    public String works (@RequestParam (name = "designation", required = false) String designation,  Model model) {
-        model.addAttribute("works", editWorkServices.listWork(designation));
+    public String works (@RequestParam (name = "designation", required = false) String designation, @RequestParam (name = "storage", required = false) String storage, Model model) {
+        model.addAttribute("works", editWorkServices.listDesignation(designation));
+        //model.addAttribute("works", editWorkServices.listStorage(storage));
         return "works";
     }
 

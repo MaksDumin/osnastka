@@ -14,8 +14,12 @@ import java.util.List;
 public class EditWorkServices {
     private final WorkRepository workRepository;
 
-    public List<Work> listWork (String designation) {
+    public List<Work> listDesignation (String designation) {
         if (designation != null) return workRepository.findByDesignationStartingWith(designation);
+        return workRepository.findAll();
+    }
+    public List<Work> listStorage (String storage){
+        if (storage !=null) return workRepository.findByAddressStartingWith(storage);
         return workRepository.findAll();
     }
 

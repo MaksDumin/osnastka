@@ -24,7 +24,7 @@
     <div class="container" style="max-width: 100%">
         <div class="row" style="max-width: 100%">
             <div class="col-sm-3" style="max-width: 100%">
-                <input type="text" class="form-control" id="search" style="max-width: 100%" placeholder="Введите наименование оснастки" name="title"> <br>
+                <input type="text" class="form-control" id="search" style="max-width: 100%" placeholder="Введите наименование оснастки" name="designation"> <br>
             </div>
             <div class="col-sm-1">
                 <input type="submit" class="btn btn-primary" value="Поиск"/>

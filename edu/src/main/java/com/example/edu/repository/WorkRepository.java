@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface WorkRepository extends JpaRepository <Work, Long> {
     List<Work> findByDesignationStartingWith (String designation);
+    List<Work> findByAddressStartingWith (String storage);
 }
