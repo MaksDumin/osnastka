@@ -19,7 +19,7 @@
 <body>
 <h3 style="margin-left: 1vh">Доступная оснастка</h3>
 
-<form action="/" method="get">
+<form action="/" method="get" id = "searchForm">
     <label for="search" class="form-label" style="margin-left: 1vh">Поиск оснастки</label>
     <div class="container" style="max-width: 100%">
         <div class="row" style="max-width: 100%">
@@ -29,7 +29,10 @@
             <div class="col-sm-1">
                 <input type="submit" class="btn btn-primary" value="Поиск"/>
             </div>
-            <div class="col-sm-8"></div>
+            <div class="col-sm-8">
+                <input type="submit" class="btn btn-primary" value="Очистить поиск" onclick="resetDesignation()">
+            </div>
+            <input type="hidden" name = "storage" id="storage" value="">
         </div>
     </div>
     <!-- Кнопка-триггер модального окна -->
@@ -103,6 +106,23 @@
         </div>
     </div>
 </div>
-<script src="script.js"></script>
+
+<script>
+    function getParametrByName(name) {
+        let url = new URL(window.location.href);
+        return url.searchParams.get(name);
+    }
+    let storageValue = getParametrByName('storage');
+    if (storageValue) {
+        document.getElementById('storage').value = storageValue;
+    }
+    function resetDesignation() {
+        document.getElementById('search').value = '';
+        let form = document.getElementById('searchForm');
+        let url = new URL(form.action);
+        url.searchParams.set('storage', storageValue);
+        window.location.href = url.toString();
+    }
+</script>
 </body>
 </html>

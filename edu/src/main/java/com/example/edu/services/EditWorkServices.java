@@ -1,10 +1,10 @@
 package com.example.edu.services;
-
 import com.example.edu.models.Work;
 import com.example.edu.repository.WorkRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
@@ -14,13 +14,11 @@ import java.util.List;
 public class EditWorkServices {
     private final WorkRepository workRepository;
 
-    public List<Work> listDesignation (String designation) {
-        if (designation != null) return workRepository.findByDesignationStartingWith(designation);
-        return workRepository.findAll();
+    public Specification<Work> getDesignation (String designation) {
+        return null;
     }
-    public List<Work> listStorage (String storage){
-        if (storage !=null) return workRepository.findByAddressStartingWith(storage);
-        return workRepository.findAll();
+    public Specification<Work> getStorage (String storage) {
+            return null;
     }
 
     public void saveWork(Work work) {
