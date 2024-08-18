@@ -17,6 +17,13 @@
 </head>
 <body>
 <h4>Подробнее</h4>
+<#if images??>
+<#list images as img>
+<img src="/images/${img.id}" height="200px"/><br><br>
+</#list>
+<#else>
+<p> No images</p>
+</#if>
 <b>Наименование оснастки:</b>${works.designation}<br>
 <b>Примечание: </b>${works.notes}<br>
 <b>Адрес: </b>${works.address}<br>
@@ -24,7 +31,7 @@
 <b>Склад: </b>${works.storage}<br>
 
 <div class="modal fade" id="exampleStorage" tabindex="-1" aria-labelledby="exampleStorageLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Заголовок модального окна</h5>
@@ -44,6 +51,7 @@
                             <option value="УИО">УИО</option>
                             <option value="УТО">УТО</option>
                         </select>
+                        <input type="text" class="form-control" placeholder="Укажите новый адресс" name="address" id="newAddress">
                     </div>
                     <br>
                     <button type="submit" class="btn btn-success">New Storage</button>
@@ -53,20 +61,36 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="exampleDelete" tabindex="-1" aria-labelledby="exampleDeleteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Удалить строку?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/work/delete/${works.id}" method="post">
+                    <input type="submit" class="btn btn-danger" value="Удалить">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </form> </div>
+        </div>
+    </div>
+</div>
 <hr>
 <div class="container" style="max-width: 100%">
     <div class="row" style="max-width: 100%">
         <div class="col-sm-2" style="max-width: 100%">
-            <form action="/work/delete/${works.id}" method="post">
-                <input type="submit" class="btn btn-danger" value="Удалить">
-            </form> </div>
-        <div class="col-sm-4">
+            <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleDelete">Удалить</button>
+        </div>
+            <br>
+            <div class="col-sm-4">
             <button type="submit" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleStorage">Изменить склад</button>
         </div>
         <div class="col-sm-6">
         </div>
     </div>
 </div>
-<br>
+</div>
 </body>
 </html>
+
