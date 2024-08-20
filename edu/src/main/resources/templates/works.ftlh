@@ -81,7 +81,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
             <div class="modal-body">
-                <form action="/work/create" method="post">
+                <form action="/work/create" method="post" enctype="multipart/form-data">
                     Наименование оснастик: <input type="text" class="form-control"
                                                   placeholder="Введите шифр и наименование" name="designation"/><br><br>
                     Примечание: <input type="text" class="form-control" placeholder="Укажите для чего применяется"
@@ -99,6 +99,9 @@
                         <option value="УТО">УТО</option>
                     </select><br><br>
                     Адрес: <input type="text" class="form-control" placeholder="Укажите адрес хранения" name="address"/><br><br>
+                    Фотография 1: <input type="file" name="file1"> <br><br>
+                    Фотография 2: <input type="file" name="file2"> <br><br>
+                    Фотография 3: <input type="file" name="file3"> <br><br>
                     <input type="submit" class="btn btn-primary" value="Добавить оснастку">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                 </form>

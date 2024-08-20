@@ -17,6 +17,13 @@
 </head>
 <body>
 <h4>Подробнее</h4>
+<#if images??>
+<#list images as img>
+    <img src="/images/${img.id}" height="100px"/><br><br>
+</#list>
+<#else>
+<p>Изображения отсутствуют</p>
+</#if>
 <b>Наименование оснастки:</b>${works.designation}<br>
 <b>Примечание: </b>${works.notes}<br>
 <b>Адрес: </b>${works.address}<br>
@@ -44,6 +51,9 @@
                             <option value="УИО">УИО</option>
                             <option value="УТО">УТО</option>
                         </select>
+                        <br>
+                        <br>
+                        <input type="text" id="address" class="form-control" name="address" placeholder="Укажите новый адрес">
                     </div>
                     <br>
                     <button type="submit" class="btn btn-success">New Storage</button>

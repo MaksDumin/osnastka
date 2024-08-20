@@ -5,8 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
-    @Table (name = "osnastka")
+    @Table (name = "teststring")
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
@@ -32,4 +36,17 @@ import lombok.NoArgsConstructor;
         @Column (name = "storage")
         private String storage;
 
+        @OneToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "work")
+        private List<Image> images = new ArrayList<>();
+        private Long previewImageId;
+        private LocalDateTime dateOfCreated;
+        @PrePersist
+        private void init(){
+            dateOfCreated = LocalDateTime.now();
+        }
+
+        public void addImageToWork (Image image) {
+            image.setWork(this);
+            images.add(image);
+        }
     }
