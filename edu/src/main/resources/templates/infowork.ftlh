@@ -29,7 +29,6 @@
 <b>Адрес: </b>${works.address}<br>
 <b>Количество: </b>${works.qty}<br>
 <b>Склад: </b>${works.storage}<br>
-
 <div class="modal fade" id="exampleStorage" tabindex="-1" aria-labelledby="exampleStorageLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -38,7 +37,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
             <div class="modal-body">
-                <form action="/work/update/${works.id}" method="post">
+                <form action="/work/update/${works.id}" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <select type="text" class="form-select" placeholder="Укажите новый склад" name="storage" id="newStorage">
                             <option value="Цех 1">Цех 1</option>
@@ -55,6 +54,10 @@
                         <br>
                         <input type="text" id="address" class="form-control" name="address" placeholder="Укажите новый адрес">
                     </div>
+                    <br>
+                    <input type="file" id="file1" placeholder="Фотография 1" name = "file1">
+                    <input type="file" id="file2" placeholder="Фотография 2" name = "file2">
+                    <input type="file" id="file3" placeholder="Фотография 1" name = "file3">
                     <br>
                     <button type="submit" class="btn btn-success">New Storage</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>

@@ -28,26 +28,26 @@ public class EditWorkServices {
         Image image1;
         Image image2;
         Image image3;
-        if (file1.getSize() != 0) {
+        if (file1 != null && file1.getSize() != 0) {
             image1 = toImageEntity(file1);
             image1.setPreviewImage(true);
             work.addImageToWork(image1);
         }
-        if (file2.getSize() != 0) {
+        if (file2 != null && file2.getSize() != 0) {
             image2 = toImageEntity(file2);
             work.addImageToWork(image2);
         }
-        if (file3.getSize() != 0) {
+        if (file3 != null && file3.getSize() != 0) {
             image3 = toImageEntity(file3);
             work.addImageToWork(image3);
         }
         log.info("Saving new Work. Designation {}", work.getDesignation());
         Work workFromDb = workRepository.save(work);
         workFromDb.setPreviewImageId(workFromDb.getImages().get(0).getId());
-        workRepository.save(work);
+        workRepository.save(workFromDb);
     }
 
-    private Image toImageEntity(MultipartFile file) throws IOException {
+    public Image toImageEntity(MultipartFile file) throws IOException {
         Image image = new Image();
         image.setName(file.getName());
         image.setOriginalFileName(file.getOriginalFilename());
