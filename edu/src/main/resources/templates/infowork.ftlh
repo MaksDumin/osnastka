@@ -19,7 +19,7 @@
 <h4>Подробнее</h4>
 <#if images??>
 <#list images as img>
-    <img src="/images/${img.id}" height="100px"/><br><br>
+    <img src="/images/${img.id}" height="200px"/><br><br>
 </#list>
 <#else>
 <p>Изображения отсутствуют</p>
@@ -56,8 +56,6 @@
                     </div>
                     <br>
                     <input type="file" id="file1" placeholder="Фотография 1" name = "file1">
-                    <input type="file" id="file2" placeholder="Фотография 2" name = "file2">
-                    <input type="file" id="file3" placeholder="Фотография 1" name = "file3">
                     <br>
                     <button type="submit" class="btn btn-success">New Storage</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>

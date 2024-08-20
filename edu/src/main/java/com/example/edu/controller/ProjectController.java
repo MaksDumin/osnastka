@@ -55,10 +55,8 @@ public class ProjectController {
     }
 
     @PostMapping("/work/create")
-    public String createWork(@RequestParam("file1") MultipartFile file1,
-                             @RequestParam("file2") MultipartFile file2,
-                             @RequestParam("file3") MultipartFile file3, Work work) throws IOException {
-        editWorkServices.saveWork(work, file1, file2, file3);
+    public String createWork(@RequestParam("file1") MultipartFile file1, Work work) throws IOException {
+        editWorkServices.saveWork(work, file1);
         return "redirect:/";
     }
 
@@ -70,55 +68,25 @@ public class ProjectController {
 
     @PostMapping("/work/update/{id}")
     public String updateStorage(@PathVariable Long id, @RequestParam String storage,
-                                @RequestParam String address, @RequestParam("file1") MultipartFile file1,
-                                @RequestParam("file2") MultipartFile file2, @RequestParam("file3") MultipartFile file3) throws IOException {
+                                @RequestParam String address, @RequestParam("file1") MultipartFile file1) throws IOException {
         Work work = editWorkServices.getWorkById(id);
-        List<Image> oldImage = new ArrayList<>(work.getImages());
         work.getImages().clear();
         if (work != null) {
             work.setStorage(storage);
             work.setAddress(address);
-            List<Image> images = work.getImages();
 
             if (file1 != null && !file1.isEmpty()) {
-                if (images.size() > 0) {
-                    Image existingImage1 = images.get(0);
-                    existingImage1 = editWorkServices.toImageEntity(file1);
-                    existingImage1.setWork(work);
-                    work.getImages().set(0, existingImage1);
-                } else {
-                    Image newImage1 = editWorkServices.toImageEntity(file1);
-                    newImage1.setWork(work);
-                    work.addImageToWork(newImage1);
+                if (!work.getImages().isEmpty()){
+                    Image existingImage = work.getImages().get(0);
+                    imageRepository.delete(existingImage);
+                    work.getImages().clear();
                 }
+                Image newImage = editWorkServices.toImageEntity(file1);
+                newImage.setWork(work);
+                work.addImageToWork(newImage);
             }
-            if (file2 != null && !file2.isEmpty()) {
-                if (images.size() > 0) {
-                    Image existingImage2 = images.get(1);
-                    existingImage2 = editWorkServices.toImageEntity(file2);
-                    existingImage2.setWork(work);
-                    work.getImages().set(1, existingImage2);
-                } else {
-                    Image newImage2 = editWorkServices.toImageEntity(file2);
-                    newImage2.setWork(work);
-                    work.addImageToWork(newImage2);
-                }
-            }
-            if (file3 != null && !file3.isEmpty()) {
-                if (images.size() > 0) {
-                    Image existingImage3 = editWorkServices.toImageEntity(file3);
-                    existingImage3.setWork(work);
-                    work.getImages().set(3, existingImage3);
-                } else {
-                    Image newImage3 = editWorkServices.toImageEntity(file3);
-                    newImage3.setWork(work);
-                    work.addImageToWork(newImage3);
-                }
-            }
-            editWorkServices.saveWork(work, null, null, null);
-            for (Image oldImages : oldImage) {
-                imageRepository.delete(oldImages);
-            }
+            editWorkServices.saveWork(work, null);
+
         }
         return "redirect:/work/" + id;
     }
