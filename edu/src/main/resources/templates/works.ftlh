@@ -99,7 +99,7 @@
                         <option value="УТО">УТО</option>
                     </select><br><br>
                     Адрес: <input type="text" class="form-control" placeholder="Укажите адрес хранения" name="address"/><br><br>
-                    Фотография : <input type="file" name="file1"> <br><br>
+                    Фотография : <input type="file" name="file1" class="form-control"> <br><br>
                     <input type="submit" class="btn btn-primary" value="Добавить оснастку">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                 </form>

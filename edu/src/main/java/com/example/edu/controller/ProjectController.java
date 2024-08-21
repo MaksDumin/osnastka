@@ -70,23 +70,23 @@ public class ProjectController {
     public String updateStorage(@PathVariable Long id, @RequestParam String storage,
                                 @RequestParam String address, @RequestParam("file1") MultipartFile file1) throws IOException {
         Work work = editWorkServices.getWorkById(id);
-        work.getImages().clear();
         if (work != null) {
             work.setStorage(storage);
             work.setAddress(address);
 
             if (file1 != null && !file1.isEmpty()) {
-                if (!work.getImages().isEmpty()){
-                    Image existingImage = work.getImages().get(0);
-                    imageRepository.delete(existingImage);
-                    work.getImages().clear();
+                if (!work.getImages().isEmpty()) {
+                    List<Image> oldImages = new ArrayList<>(work.getImages());
+                    for (Image oldImage : oldImages) {
+                        work.getImages().remove(oldImage);
+                        imageRepository.delete(oldImage);
+                    }
+                }                     Image newImages = editWorkServices.toImageEntity(file1);
+                    newImages.setWork(work);
+                    work.addImageToWork(newImages);
                 }
-                Image newImage = editWorkServices.toImageEntity(file1);
-                newImage.setWork(work);
-                work.addImageToWork(newImage);
-            }
-            editWorkServices.saveWork(work, null);
 
+            editWorkServices.saveWork(work, null);
         }
         return "redirect:/work/" + id;
     }

@@ -25,7 +25,17 @@ public class EditWorkServices {
 
     public void saveWork(Work work, MultipartFile file1) throws IOException{
         log.info("Saving new Work. Designation {}", work.getDesignation());
-        workRepository.save(work);
+        Image image1;
+        if (file1 != null && file1.getSize() != 0) {
+            image1 = toImageEntity(file1);
+            image1.setPreviewImage(true);
+            work.addImageToWork(image1);
+        }
+        Work workFromDb = workRepository.save(work);
+        if (!workFromDb.getImages().isEmpty()) {
+            workFromDb.setPreviewImageId(workFromDb.getImages().get(0).getId());
+        }
+        workRepository.save(workFromDb);
     }
     public Image toImageEntity(MultipartFile file) throws IOException {
         Image image = new Image();
