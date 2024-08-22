@@ -37,8 +37,11 @@
 
             if (document.getElementById('type').value == "П." && document.getElementById('vid').value == "ГИ-") {
                 document.getElementById('harakt').disabled = true;
+                document.getElementById('harakt').classList.remove('is-invalid');
                 document.getElementById('du').disabled = true;
+                document.getElementById('du').classList.remove('is-invalid');
                 document.getElementById('ispol').disabled = true;
+                document.getElementById('ispol').classList.remove('is-invalid');
                 document.getElementById('harakt').value = '';
                 document.getElementById('du').value = '';
                 document.getElementById('ispol').value = '';
@@ -50,7 +53,9 @@
                 document.getElementById('succesName').value = fullName;
             } else if (document.getElementById('type').value == "З." && document.getElementById('vid').value == "ГИ-") {
                 document.getElementById('harakt').disabled = true;
+                document.getElementById('harakt').classList.remove('is-invalid');
                 document.getElementById('diam').disabled = true;
+                document.getElementById('diam').classList.remove('is-invalid');
                 document.getElementById('harakt').value = '';
                 document.getElementById('diam').value = '';
                 slechDu = '-Ду';
@@ -64,6 +69,10 @@
                 document.getElementById('pu').disabled = true;
                 document.getElementById('diam').disabled = true;
                 document.getElementById('ispol').disabled = true;
+                document.getElementById('du').classList.remove('is-invalid');
+                document.getElementById('pu').classList.remove('is-invalid');
+                document.getElementById('diam').classList.remove('is-invalid');
+                document.getElementById('ispol').classList.remove('is-invalid');
                 slechDu = '';
                 slechPu = '';
                 slechD ='';
