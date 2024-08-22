@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css"/>
     <title>Подробнее</title>
     <meta charset="UTF-8">
+
 </head>
 <body>
 <h4>Подробнее</h4>
