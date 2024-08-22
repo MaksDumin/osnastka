@@ -95,8 +95,7 @@
                         <option value="Цех 6">Цех 6</option>
                         <option value="Цех 7">Цех 7</option>
                         <option value="Цех 8">Цех 8</option>
-                        <option value="УИО">УИО</option>
-                        <option value="УТО">УТО</option>
+                        <option value="УИО">УПИО</option>
                     </select><br><br>
                     Адрес: <input type="text" class="form-control" placeholder="Укажите адрес хранения" name="address"/><br><br>
                     Фотография : <input type="file" name="file1" class="form-control"> <br><br>

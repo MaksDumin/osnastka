@@ -47,8 +47,7 @@
                             <option value="Цех 6">Цех 6</option>
                             <option value="Цех 7">Цех 7</option>
                             <option value="Цех 8">Цех 8</option>
-                            <option value="УИО">УИО</option>
-                            <option value="УТО">УТО</option>
+                            <option value="УПИО">УПИО</option>
                         </select>
                         <br>
                         <br>

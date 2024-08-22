@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
-public interface WorkRepository extends JpaRepository <Work, Long> {
+public interface WorkRepository extends JpaRepository <Work, String> {
     @Query ("SELECT w FROM Work w WHERE LOWER(w.designation) LIKE LOWER(CONCAT('%', :designation, '%')) AND LOWER(w.storage) LIKE LOWER(CONCAT('%', :storage, '%'))")
     List<Work> findByDesignationAndStorageIgnoreCase(@Param("designation") String designation, @Param("storage") String storage);
     @Query ("SELECT w FROM Work w WHERE LOWER(w.storage) LIKE LOWER(CONCAT('%', :storage, '%'))")

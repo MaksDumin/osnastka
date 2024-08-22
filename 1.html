@@ -8,34 +8,151 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <title>Osnastka</title>
+    <script>
+        function updateFullName() {
+            const type = document.getElementById('type').value;
+            const vid = document.getElementById('vid').value;
+            const number = document.getElementById('number').value;
+            const harakt = document.getElementById('harakt').value;
+            const du = document.getElementById('du').value;
+            const pu = document.getElementById('pu').value;
+            const diam = document.getElementById('diam').value;
+            const ispol = document.getElementById('ispol').value;
+            var slechDu = '';
+            var slechPu = '';  
+            var slechD = '';
+            var slesh = '';   
+            document.getElementById('harakt').disabled = false;
+            document.getElementById('du').disabled = false;
+            document.getElementById('pu').disabled = false;
+            document.getElementById('diam').disabled = false;
+            document.getElementById('ispol').disabled = false;
+
+            if (document.getElementById('type').value == "П." && document.getElementById('vid').value == "ГИ-") {
+                document.getElementById('harakt').disabled = true;
+                document.getElementById('du').disabled = true;
+                document.getElementById('ispol').disabled = true;
+                document.getElementById('harakt').value = '';
+                document.getElementById('du').value = '';
+                document.getElementById('ispol').value = '';
+                slechPu = '-';
+                slesh = '-';
+                slechD = '-';
+                var fullName = '';
+                fullName = type + vid + number + slechD + diam + slesh + pu;
+            } else if (document.getElementById('type').value == "З." && document.getElementById('vid').value == "ГИ-") {
+                document.getElementById('harakt').disabled = true;
+                document.getElementById('diam').disabled = true;
+                document.getElementById('harakt').value = '';
+                document.getElementById('diam').value = '';
+                slechDu = '-Ду';
+                slechPu = '-';
+                slesh = '-';
+                var fullName = '';
+                fullName = type + vid + number + (harakt.disabled ? '' :  harakt) + slechDu + du + slechPu + pu + (diam.disabled ? '' : (slechD + diam)) + slesh + ispol;
+            } else {
+                document.getElementById('du').disabled = true;
+                document.getElementById('pu').disabled = true;
+                document.getElementById('diam').disabled = true;
+                document.getElementById('ispol').disabled = true;
+                slechDu = '';
+                slechPu = '';
+                slechD ='';
+                slesh = '-';
+                fullName = type + vid + number + slesh + harakt;
+            }
+                 
+            console.log (fullName);
+            document.getElementById('fullName').value = fullName; 
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = ['type', 'vid', 'number','harakt','du','pu','diam','ispol'];
+            inputs.forEach(id => {
+                document.getElementById(id).addEventListener('input', updateFullName);
+            });
+            updateFullName();
+        });
+    </script> 
+    
 </head>
 <body>
-    <table class="table table-bordered">
-        <thead>
-            <tr class = "table-success">
-                <th scope="col">Наименование оснастки</th>
-                <th scope="col">Примечание</th>
-                <th scope="col">Адрес</th>
-                <th scope="col">Кол-во</th>
-                <th scope="col">Склад</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="table-light">
-                <th>П.ОП - 12018 Подставка</th>
-                <th>Для снятия фасок на обечайках</th>
-                <th>Место 1</th>
-                <th>2</th>
-                <th>Склад оснастки</th>
-            </tr>
-            <tr class="table-light">
-                <th>П.ТГ.СГ - 13038 - 32х233 Ролик сортогибочной машины</th>
-                <th>Для гибки трубы Ø 32 на радиус 233</th>
-                <th>Место 12</th>
-                <th>1</th>
-                <th>Склад цеха №8</th>
-            </tr>
-        </tbody>
-    </table>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Запустите демо модального окна
+      </button>
+    
+      <!-- Модальное окно -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Создание оснастки</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <form class="was-validated">
+                    <div class="mb-3">
+                <select class="form-select is-invalid" aria-label="Выбор типа оснастки" id="type" required aria-label="select example">
+                    <option value="">Выбор типа оснастки:</option>
+                    <option value="З.">Заглушка</option>
+                    <option value="К.">Кондуктор</option>
+                    <option value="М.">Мебель</option>
+                    <option value="П.">Приспособления</option>
+                    <option value="С.">Стенд</option>
+                    <option value="Ш.">Шаблон</option>
+                  </select> 
+                  </div>
+                  <br>
+                  <div class="mb-2">
+                  <select class="form-select is-invalid" aria-label="Назначение (вид) оснастки" id="vid" required aria-label="select example">
+                    <option value="">Назначение (вид) оснастки:</option>
+                    <option value="АК-">Антикоррозионные работы</option>
+                    <option value="ВН-">Вспомогательного назначения</option>
+                    <option value="ГИ-">Гидроиспытательные работы</option>
+                    <option value="КР-">Крепёжные работы</option>
+                    <option value="ЛГ-">Листогибочные работы</option>
+                    <option value="МК-">Маркировочные работы</option>
+                    <option value="ОП-">Опорно-поддерживающая оснастка</option>
+                    <option value="ПИ-">Пневмоиспытательные работы</option>
+                    <option value="ПО-">Подготовительные работы</option>
+                    <option value="ПР-">Прочего назначения</option>
+                    <option value="ПШ-">Прессово-штамповые работы</option>
+                    <option value="СБ-">Сборочные работы</option>
+                    <option value="СВ-">Сварочные работы</option>
+                    <option value="СЛ-">Слесарные работы</option>
+                    <option value="СР-">Сверлильные работы</option>
+                    <option value="СТ-">Строгальные работы</option>
+                    <option value="ТГ-">Трубогибочные работы</option>
+                    <option value="ТК-">Токарные работы</option>
+                    <option value="ТО-">Термическая обработка</option>
+                    <option value="ТП-">Транспортировочные работы</option>
+                    <option value="ТР-">Термическая обработка</option>
+                    <option value="УП-">Упаковочные работы</option>
+                    <option value="ФЗ-">Фрезерные работы</option>
+                  </select>
+                </div>
+                  <br>
+                  <div class="mb-2">
+                    <textarea class="form-control is-invalid" id="number" placeholder="Порядковый номер" required></textarea>
+                  </div>
+                </form>
+                <br>
+                <input type="text" aria-label="Диаметр" class="form-control" placeholder="Характеристики" id="harakt">
+                <br>
+                <div class="input-group">
+                    <input type="text" aria-label="Ду" class="form-control" placeholder="Ду" id="du">
+                    <input type="text" aria-label="Pу" class="form-control" placeholder="Pу" id="pu">
+                    <input type="text" aria-label="Диаметр" class="form-control" placeholder="Диаметр" id="diam" >
+                    <input type="text" aria-label="Исполнение" class="form-control" placeholder="Исполнение" id="ispol" >
+                  </div>
+                  <br>
+                  <textarea class="form-control" placeholder="Полное наиименование" id="fullName"></textarea>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+              <button type="button" class="btn btn-primary">Сохранить изменения</button>
+            </div>
+          </div>
+        </div>
+      </div>
 </body>
 </html>

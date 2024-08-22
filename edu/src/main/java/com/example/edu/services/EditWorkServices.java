@@ -47,11 +47,11 @@ public class EditWorkServices {
         return image;
     }
 
-    public void deleteWork (Long id) {
+    public void deleteWork (String id) {
         workRepository.deleteById(id);
     }
 
-    public Work getWorkById (Long id) {
+    public Work getWorkById (String id) {
         return workRepository.findById(id).orElse(null);
     }
 }

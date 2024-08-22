@@ -8,18 +8,19 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
-    @Table (name = "teststring")
+    @Table (name = "works")
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
     public class Work {
         @Id
-        @GeneratedValue (strategy = GenerationType.AUTO)
+        @GeneratedValue (strategy = GenerationType.UUID)
 
-        @Column (name = "id")
-        private long id;
+        @Column (name = "id", nullable = false)
+        private String id;
 
         @Column (name = "designation", columnDefinition = "text")
         private String designation;
@@ -38,11 +39,14 @@ import java.util.List;
 
         @OneToMany (cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "work")
         private List<Image> images = new ArrayList<>();
-        private Long previewImageId;
+        private String previewImageId;
         private LocalDateTime dateOfCreated;
         @PrePersist
         private void init(){
             dateOfCreated = LocalDateTime.now();
+            if (this.id == null) {
+                this.id = UUID.randomUUID().toString();
+            }
         }
 
         public void addImageToWork (Image image) {

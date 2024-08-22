@@ -5,17 +5,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Entity
-@Table (name = "testimages")
+@Table (name = "images")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Image {
     @Id
-    @GeneratedValue (strategy = GenerationType.SEQUENCE, generator = "image_id_seq")
-    @SequenceGenerator(name = "image_id_seq", sequenceName = "image_id_seq", allocationSize = 1)
-    @Column (name = "id")
-    private Long id;
+    @GeneratedValue (strategy = GenerationType.UUID)
+    @Column (name = "id", nullable = false)
+    private String id;
     @Column (name = "name")
     private String name;
     @Column (name = "originalFileName")
@@ -32,4 +33,11 @@ public class Image {
 
     @ManyToOne (cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private Work work;
+
+    @PrePersist
+    private void ensureId() {
+        if (this.id == null) {
+            this.id = UUID.randomUUID().toString();
+        }
+    }
 }

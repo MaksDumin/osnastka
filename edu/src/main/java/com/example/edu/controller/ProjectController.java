@@ -47,7 +47,7 @@ public class ProjectController {
     }
 
     @GetMapping("/work/{id}")
-    public String infoWork(@PathVariable Long id, Model model) {
+    public String infoWork(@PathVariable String id, Model model) {
         Work work = editWorkServices.getWorkById(id);
         model.addAttribute("works", work);
         model.addAttribute("images", work.getImages());
@@ -61,13 +61,13 @@ public class ProjectController {
     }
 
     @PostMapping("/work/delete/{id}")
-    public String deleteWork(@PathVariable Long id) {
+    public String deleteWork(@PathVariable String id) {
         editWorkServices.deleteWork(id);
         return "redirect:/";
     }
 
     @PostMapping("/work/update/{id}")
-    public String updateStorage(@PathVariable Long id, @RequestParam String storage,
+    public String updateStorage(@PathVariable String id, @RequestParam String storage,
                                 @RequestParam String address, @RequestParam("file1") MultipartFile file1) throws IOException {
         Work work = editWorkServices.getWorkById(id);
         if (work != null) {
