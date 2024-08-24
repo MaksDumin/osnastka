@@ -16,6 +16,7 @@ public interface WorkRepository extends JpaRepository <Work, String> {
     List<Work> findByStorageIgnoreCase(@Param("storage") String storage);
     @Query ("SELECT w FROM Work w WHERE LOWER(w.designation) LIKE LOWER(CONCAT('%', :designation, '%'))")
     List<Work> findByDesignationIgnoreCase (@Param("designation") String designation);
+
     List<Work> findAll();
 
     @Modifying

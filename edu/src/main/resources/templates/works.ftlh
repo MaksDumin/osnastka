@@ -215,7 +215,7 @@
                     <br>
                     <textarea class="form-control is-invalid" placeholder="Полное наиименование" id="fullName" required></textarea>
             </div>
-                    <input type="text" id="succesName" class="form-control" placeholder="Введите шифр и наименование" name="designation" style="visibility: hidden"/>
+                    <input type="text" id="succesName" class="form-control" placeholder="Введите шифр и наименование" name="designation" style="visibility: hidden" required/>
 
                     <input type="text" class="form-control" placeholder="Укажите для чего применяется"
                                        name="notes"/>
