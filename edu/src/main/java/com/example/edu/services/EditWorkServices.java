@@ -1,7 +1,9 @@
 package com.example.edu.services;
 import com.example.edu.models.Image;
 import com.example.edu.models.Work;
+import com.example.edu.repository.ImageRepository;
 import com.example.edu.repository.WorkRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -9,12 +11,16 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class EditWorkServices {
     private final WorkRepository workRepository;
+    private final ImageRepository imageRepository;
+
 
     public Specification<Work> getDesignation (String designation) {
         return null;
@@ -24,7 +30,7 @@ public class EditWorkServices {
     }
 
     public void saveWork(Work work, MultipartFile file1) throws IOException{
-        log.info("Saving new Work. Designation {}", work.getDesignation());
+        log.info("Новая запись в таблице сохранена. Designation {}", work.getDesignation());
         log.info("Hibernate: select w1_0.id,w1_0.address,w1_0.date_of_created,w1_0.designation,w1_0.notes,w1_0.preview_image_id,w1_0.qty,w1_0.storage from works w1_0 where lower(w1_0.designation) = lower(?)");
 
         Work existingWork = workRepository.findByDesignationAndStorageIgnoreCase(work.getDesignation(), work.getStorage())
@@ -35,23 +41,40 @@ public class EditWorkServices {
         if (existingWork != null) {
             existingWork.setQty(existingWork.getQty() + work.getQty());
 
+            if (existingWork.getQty() == 0) {
+                workRepository.delete(existingWork);
+                log.info("Запись таблицы c qty = 0 удалена у строки. Designation{}", existingWork.getDesignation());
+                return;
+            }
             if (file1 != null && file1.getSize() != 0) {
                 Image image1 = toImageEntity(file1);
                 image1.setPreviewImage(true);
+                imageRepository.save(image1);
                 existingWork.addImageToWork(image1);
             }
             workRepository.save(existingWork);
+
             } else {
+            if (work.getQty() == 0) {
+                workRepository.delete(work);
+                log.info("создание записи таблицы c qty = 0 проигнорировано у строки. Designation {}", work.getDesignation());
+                return;
+            }
                 if (file1 != null && file1.getSize() != 0) {
                     Image image1 = toImageEntity(file1);
                     image1.setPreviewImage(true);
                     work.addImageToWork(image1);
                 }
                 Work workFromDb = workRepository.save(work);
+
                 if (!workFromDb.getImages().isEmpty()) {
                     workFromDb.setPreviewImageId(workFromDb.getImages().get(0).getId());
                 }
-                workRepository.save(workFromDb);
+                if (workFromDb.getQty() == 0) {
+                    workRepository.delete(workFromDb);
+                    log.info("Запись таблицы c qty = 0 удалена у строки. Designation{}", workFromDb.getDesignation());
+                }
+               // workRepository.save(workFromDb);
             }
         }
 
@@ -71,5 +94,52 @@ public class EditWorkServices {
 
     public Work getWorkById (String id) {
         return workRepository.findById(id).orElse(null);
+    }
+@Transactional
+    public void updateWork(Work work) {
+        if (work.getQty() == 0) {
+            workRepository.delete(work);
+            return;
+        }
+        workRepository.save(work);
+    }
+
+    public void handleStorageUpdate(Work exisitngWork, String newStorage, String newAddress, int quantityToMove, MultipartFile file1) throws IOException {
+        int updateQty = exisitngWork.getQty() - quantityToMove;
+        exisitngWork.setQty(updateQty);
+        exisitngWork.getImages().clear();
+        Work existingNewWork = workRepository.findByDesignationAndStorageIgnoreCase(exisitngWork.getDesignation(), newStorage)
+                .stream()
+                .findFirst()
+                .orElse(null);
+        if (existingNewWork != null) {
+            existingNewWork.setQty(existingNewWork.getQty() + quantityToMove);
+        } else {
+            Work newWork = new Work();
+            newWork.setDesignation(exisitngWork.getDesignation());
+            newWork.setStorage(newStorage);
+            newWork.setAddress(newAddress);
+            newWork.setQty(quantityToMove);
+            newWork.setNotes(exisitngWork.getNotes());
+            if (file1 != null && file1.getSize() != 0) {
+                Image image1 = toImageEntity(file1);
+                image1.setPreviewImage(true);
+                newWork.addImageToWork(image1);
+            }
+            existingNewWork = workRepository.save(newWork);
+        }
+        if (existingNewWork.getImages() != null && !existingNewWork.getImages().isEmpty()) {
+            existingNewWork.setPreviewImageId(existingNewWork.getImages().get(0).getId());
+        }
+        if (exisitngWork.getQty() == 0) {
+            workRepository.delete(exisitngWork);
+            return;
+        }
+        workRepository.save(exisitngWork);
+        if (existingNewWork.getQty() == 0) {
+            workRepository.delete(existingNewWork);
+            return;
+        }
+        workRepository.save(existingNewWork);
     }
 }

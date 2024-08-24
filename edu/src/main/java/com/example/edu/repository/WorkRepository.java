@@ -23,4 +23,4 @@ public interface WorkRepository extends JpaRepository <Work, String> {
     @Transactional
     @Query("UPDATE Work w SET w.storage = :storage WHERE w.id = :id")
     void updateStorageById (@Param("id") Long id, @Param("storage") String storage);
-}
+   }

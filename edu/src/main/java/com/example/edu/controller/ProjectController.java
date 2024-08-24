@@ -61,33 +61,36 @@ public class ProjectController {
     }
 
     @PostMapping("/work/delete/{id}")
-    public String deleteWork(@PathVariable String id) {
-        editWorkServices.deleteWork(id);
+    public String deleteWork(@PathVariable String id, @RequestParam int quantityToDelete, Model model) throws IOException {
+        Work work = editWorkServices.getWorkById(id);
+        if (work != null) {
+            int currentQty = work.getQty();
+            if (quantityToDelete > currentQty) {
+                model.addAttribute("errorMessage", "Нет достаточного запаса под списание");
+                return "redirect:/work/" + id;
+            } else if (quantityToDelete == currentQty) {
+                editWorkServices.deleteWork(id);
+            } else {
+                work.setQty(currentQty - quantityToDelete);
+                editWorkServices.updateWork(work);
+            }
+        }
         return "redirect:/";
     }
 
     @PostMapping("/work/update/{id}")
     public String updateStorage(@PathVariable String id, @RequestParam String storage,
-                                @RequestParam String address, @RequestParam("file1") MultipartFile file1) throws IOException {
+                                @RequestParam String address, @RequestParam("file1") MultipartFile file1,
+                                @RequestParam int quantityToMove, Model model) throws IOException {
         Work work = editWorkServices.getWorkById(id);
         if (work != null) {
-            work.setStorage(storage);
-            work.setAddress(address);
-
-            if (file1 != null && !file1.isEmpty()) {
-                if (!work.getImages().isEmpty()) {
-                    List<Image> oldImages = new ArrayList<>(work.getImages());
-                    for (Image oldImage : oldImages) {
-                        work.getImages().remove(oldImage);
-                        imageRepository.delete(oldImage);
-                    }
-                }                     Image newImages = editWorkServices.toImageEntity(file1);
-                    newImages.setWork(work);
-                    work.addImageToWork(newImages);
-                }
-
-            editWorkServices.saveWork(work, null);
+            if (quantityToMove > work.getQty()){
+                model.addAttribute("errorMessage", "Нет достаточного запаса для перемещения");
+                return "redirect:/work/" + id;
+            } else {
+             editWorkServices.handleStorageUpdate(work, storage, address ,quantityToMove, file1);
+            }
         }
-        return "redirect:/work/" + id;
+        return "redirect:/";
     }
 }
