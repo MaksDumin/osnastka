@@ -137,6 +137,7 @@ public class EditWorkServices {
         } else {
             Work newWork = new Work();
             newWork.setDesignation(exisitngWork.getDesignation());
+            newWork.setParentStorage(exisitngWork.getParentStorage());
             newWork.setStorage(newStorage);
             newWork.setAddress(newAddress);
             newWork.setQty(quantityToMove);

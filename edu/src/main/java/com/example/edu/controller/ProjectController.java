@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -81,7 +82,7 @@ public class ProjectController {
     @PostMapping("/work/update/{id}")
     public String updateStorage(@PathVariable String id, @RequestParam String storage,
                                 @RequestParam String address, @RequestParam("file1") MultipartFile file1,
-                                @RequestParam int quantityToMove, Model model) throws IOException {
+                                @RequestParam int quantityToMove,  Model model) throws IOException {
         Work work = editWorkServices.getWorkById(id);
         if (work != null) {
             if (quantityToMove > work.getQty()){

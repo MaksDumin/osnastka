@@ -30,11 +30,12 @@
     <b>Адрес: </b>${works.address}<br>
     <b>Количество: </b>${works.qty}<br>
     <b>Склад: </b>${works.storage}<br>
+    <b>Склад хранения: </b>${works.parentStorage}<br>
     <div class="modal fade" id="exampleStorage" tabindex="-1" aria-labelledby="exampleStorageLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Изменение записи</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Перемещение оснастки</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                 </div>
                 <div class="modal-body">
@@ -56,15 +57,14 @@
                         </div>
                         <br><br>
                         <div class="form-group">
-                            <input type="number" id="quantityToMove" name="quantityToMove" class="form-control" placeholder="Введите кол-во к перемещению" required>
+                            <input type="number" id="quantityToMove" name="quantityToMove" min="1" max="${works.qty}" class="form-control" placeholder="Введите кол-во к перемещению" required>
                         </div>
                         <br>
-                        <#if errorMessage?? >
+                        <#if errorMessage??>
                             <div class="alert alert-danger" role="alert">
                                 ${errorMessage}
                             </div>
                         </#if>
-                        <br>
                         <input type="file" id="file1" placeholder="Фотография 1" name = "file1" class="form-control">
                         <br>
                         <button type="submit" class="btn btn-success">Сохранить</button>
@@ -103,12 +103,12 @@
     <div class="container" style="max-width: 100%">
         <div class="row" style="max-width: 100%">
             <div class="col-sm-2" style="max-width: 100%">
-                <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleDelete">Удалить запись</button>
+                <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleDelete">Удалить</button>
             </div>
             <br>
             <br>
                 <div class="col-sm-2">
-                <button type="submit" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleStorage">Изменить запись</button>
+                <button type="submit" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleStorage">Переместить</button>
             </div>
             <div class="col-sm-8">
             </div>

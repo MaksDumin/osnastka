@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <title>works</title>
     <meta charset="UTF-8">
     <script>
@@ -106,7 +108,7 @@
             <div class="col-sm-1">
                 <input type="submit" class="btn btn-primary" value="Поиск"/>
             </div>
-            <div class="col-sm-8">
+          <div class="col-sm-1">
                 <input type="submit" class="btn btn-primary" value="Очистить поиск" onclick="resetDesignation()">
             </div>
             <input type="hidden" name = "storage" id="storage" value="">
@@ -120,13 +122,13 @@
     <br><br>
 </form>
 
-<table class="table">
-    <thead class="table-success">
+<table id="equipmentTable" class="table table-bordered table-hover table-sm">
+    <thead class="table table-success">
     <tr>
-        <th scope="col">Наименование оснастки</th>
+        <th scope="col" class="sortable">Наименование оснастки</th>
         <th scope="col">Примечание</th>
         <th scope="col">Кол-во</th>
-        <th scope="col">Склад</th>
+        <th scope="col" class="sortable">Склад</th>
         <th scope="col">Адрес</th>
         <th scope="col">Детально</th>
     </tr>
@@ -235,6 +237,19 @@
                     </select><br>
                 </div>
             <br>
+                <select type="text" class="form-select" name="parentStorage" required>
+                    <option value="">Укажите склад хранения</option>
+                    <option value="-">-</option>
+                    <option value="Цех 1">Цех 1</option>
+                    <option value="Цех 3">Цех 3</option>
+                    <option value="Цех 4">Цех 4</option>
+                    <option value="Цех 5">Цех 5</option>
+                    <option value="Цех 6">Цех 6</option>
+                    <option value="Цех 7">Цех 7</option>
+                    <option value="Цех 8">Цех 8</option>
+                    <option value="УИО">УПИО</option>
+                </select><br>
+            <br>
             <div class="input-group">
                     <input type="text" class="form-control" placeholder="Укажите адрес хранения" name="address"/><br>
             </div>
@@ -259,7 +274,8 @@
     let storageValue = getParametrByName('storage');
     if (storageValue) {
         document.getElementById('storage').value = storageValue;
-    }
+        storageValue = getParametrByName('storage');
+        }
     function resetDesignation() {
         document.getElementById('search').value = '';
         let form = document.getElementById('searchForm');
@@ -268,5 +284,40 @@
         window.location.href = url.toString();
     }
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const getCellValue = (row, index) => row.children[index].innerText || row.children[index].textContent;
+
+        const comparer = (index, asc) => (a, b) => ((v1, v2) =>
+                v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2)
+        )(getCellValue(asc ? a : b, index), getCellValue(asc ? b : a, index));
+
+        document.querySelectorAll('th.sortable').forEach(th => th.addEventListener('click', function() {
+            const table = th.closest('table');
+            Array.from(table.querySelectorAll('tbody > tr'))
+                .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
+                .forEach(tr => table.querySelector('tbody').appendChild(tr));
+            th.classList.toggle('asc', this.asc);
+            th.classList.toggle('desc', !this.asc);
+        }));
+    });
+</script>
+<style>
+    th.sortable {
+        cursor: pointer;
+    }
+    th.sortable :after {
+        content: '\25B2';
+        float: right;
+        margin-left: 5px;
+        opacity: 0.5;
+    }
+    th.sortable.asc:after {
+        content: '\25B2';
+    }
+    th.sortable.desc:after {
+        content: '\25BC';
+    }
+</style>
 </body>
 </html>

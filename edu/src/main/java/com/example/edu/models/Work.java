@@ -37,6 +37,9 @@ import java.util.UUID;
         @Column (name = "storage")
         private String storage;
 
+        @Column (name = "parentStorage")
+        private String parentStorage;
+
         @OneToMany (cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "work")
         private List<Image> images = new ArrayList<>();
         private String previewImageId;
