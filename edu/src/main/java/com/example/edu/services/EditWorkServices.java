@@ -103,17 +103,37 @@ public class EditWorkServices {
         }
         workRepository.save(work);
     }
-
+@Transactional
     public void handleStorageUpdate(Work exisitngWork, String newStorage, String newAddress, int quantityToMove, MultipartFile file1) throws IOException {
         int updateQty = exisitngWork.getQty() - quantityToMove;
         exisitngWork.setQty(updateQty);
-        exisitngWork.getImages().clear();
+        //exisitngWork.getImages().clear();
+        List<Image> copiedImages = new ArrayList<>();
+        for (Image image : exisitngWork.getImages()) {
+            Image copiedImage = new Image();
+            copiedImage.setName(image.getName());
+            copiedImage.setOriginalFileName(image.getOriginalFileName());
+            copiedImage.setSize(image.getSize());
+            copiedImage.setContentType(image.getContentType());
+            copiedImage.setBytes(image.getBytes());
+            copiedImage.setPreviewImage(image.isPreviewImage());
+            copiedImages.add(copiedImage);
+        }
         Work existingNewWork = workRepository.findByDesignationAndStorageIgnoreCase(exisitngWork.getDesignation(), newStorage)
                 .stream()
                 .findFirst()
                 .orElse(null);
         if (existingNewWork != null) {
             existingNewWork.setQty(existingNewWork.getQty() + quantityToMove);
+          for (Image copiedImage :copiedImages) {
+              boolean exists = existingNewWork.getImages().stream()
+                              .anyMatch(image -> image.getOriginalFileName().equals(copiedImage.getOriginalFileName()));
+              if (!exists) {
+                  copiedImage.setWork(existingNewWork);
+                  imageRepository.save(copiedImage);
+                  existingNewWork.addImageToWork(copiedImage);
+              }
+          }
         } else {
             Work newWork = new Work();
             newWork.setDesignation(exisitngWork.getDesignation());
@@ -124,7 +144,20 @@ public class EditWorkServices {
             if (file1 != null && file1.getSize() != 0) {
                 Image image1 = toImageEntity(file1);
                 image1.setPreviewImage(true);
-                newWork.addImageToWork(image1);
+                boolean exists = newWork.getImages().stream()
+                                .anyMatch(image -> image.getOriginalFileName().equals(image1.getOriginalFileName()));
+                if (!exists) {
+                    newWork.addImageToWork(image1);
+                }
+            }
+            for (Image copiedImage : copiedImages) {
+                boolean exists = newWork.getImages().stream()
+                                .anyMatch(image -> image.getOriginalFileName().equals(copiedImage.getOriginalFileName()));
+                if (!exists) {
+                    copiedImage.setWork(newWork);
+                    imageRepository.save(copiedImage);
+                    newWork.addImageToWork(copiedImage);
+                }
             }
             existingNewWork = workRepository.save(newWork);
         }
@@ -132,11 +165,13 @@ public class EditWorkServices {
             existingNewWork.setPreviewImageId(existingNewWork.getImages().get(0).getId());
         }
         if (exisitngWork.getQty() == 0) {
+            exisitngWork.getImages().clear();
             workRepository.delete(exisitngWork);
             return;
         }
         workRepository.save(exisitngWork);
         if (existingNewWork.getQty() == 0) {
+            exisitngWork.getImages().clear();
             workRepository.delete(existingNewWork);
             return;
         }
