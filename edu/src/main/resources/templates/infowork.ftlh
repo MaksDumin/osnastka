@@ -17,6 +17,7 @@
 
     </head>
     <body>
+    <input type="hidden" name = "succesName" id="succesName" value="${works.designation}">
     <h4>Подробнее</h4>
     <#if images??>
     <#list images as img>
@@ -25,7 +26,9 @@
     <#else>
     <p>Изображения отсутствуют</p>
     </#if>
-    <b>Наименование оснастки:</b>${works.designation}<br>
+    <b>Наименование оснастки: </b>${works.designation}<br>
+    <b>Типа оснастки: </b> <span id="type"></span><br>
+    <b>Вид оснастки: </b><span id="vid"></span><br>
     <b>Примечание: </b>${works.notes}<br>
     <b>Адрес: </b>${works.address}<br>
     <b>Количество: </b>${works.qty}<br>
@@ -115,5 +118,105 @@
         </div>
     </div>
     <br>
+    <script>
+        const a = document.getElementById('succesName').value;
+        const textType = document.getElementById('type');
+        const textVid = document.getElementById('vid');
+        switch (true) {
+            case a.includes('З.'):
+                textType.textContent = 'Заглушка';
+                break;
+            case a.includes('К.'):
+                textType.textContent = 'Кондуктор';
+                break;
+            case a.includes('М.'):
+                textType.textContent = 'Мебель';
+                break;
+            case a.includes('П.'):
+                textType.textContent = 'Приспособления';
+                break;
+            case a.includes('С.'):
+                textType.textContent = 'Стенд';
+                break;
+            case a.includes('Ш.'):
+                textType.textContent = 'Шаблон';
+                break;
+            default:
+                textType.textContent = '';
+        }
+        switch (true) {
+            case a.includes('ВН-'):
+                textVid.textContent = 'Вспомогательного назначения';
+                break;
+            case a.includes('ГИ-'):
+                textVid.textContent = 'Гидроиспытательные работы';
+                break;
+            case a.includes('КР-'):
+                textVid.textContent = 'Крепёжные работы';
+                break;
+            case a.includes('ЛГ-'):
+                textVid.textContent = 'Листогибочные работы';
+                break;
+            case a.includes('МК-'):
+                textVid.textContent = 'Маркировочные работы';
+                break;
+            case a.includes('ОП-'):
+                textVid.textContent = 'Опорно-поддерживающая оснастка';
+                break;
+            case a.includes('ПИ-'):
+                textVid.textContent = 'Пневмоиспытательные работы';
+                break;
+            case a.includes('ПО-'):
+                textVid.textContent = 'Подготовительные работы';
+                break;
+            case a.includes('ПР-'):
+                textVid.textContent = 'Прочего назначения';
+                break;
+            case a.includes('ПШ-'):
+                textVid.textContent = 'Прессово-штамповые работы';
+                break;
+            case a.includes('СБ-'):
+                textVid.textContent = 'Сборочные работы';
+                break;
+            case a.includes('СВ-'):
+                textVid.textContent = 'Сварочные работы';
+                break;
+            case a.includes('СЛ-'):
+                textVid.textContent = 'Слесарные работы';
+                break;
+            case a.includes('СР-'):
+                textVid.textContent = 'Сверлильные работы';
+                break;
+            case a.includes('СТ-'):
+                textVid.textContent = 'Строгальные работы';
+                break;
+            case a.includes('ТГ-'):
+                textVid.textContent = 'Трубогибочные работы';
+                break;
+            case a.includes('ТК-'):
+                textVid.textContent = 'Токарные работы';
+                break;
+            case a.includes('ТО-'):
+                textVid.textContent = 'Термическая обработка';
+                break;
+            case a.includes('ТП-'):
+                textVid.textContent = 'Транспортировочные работы';
+                break;
+            case a.includes('ТР-'):
+                textVid.textContent = 'Термическая обработка';
+                break;
+            case a.includes('УП-'):
+                textVid.textContent = 'Упаковочные работы';
+                break;
+            case a.includes('ФЗ-'):
+                textVid.textContent = 'Фрезерные работы';
+                break;
+            case a.includes('АК-'):
+                textVid.textContent = 'Антикоррозионные работы';
+                break;
+            default:
+                textVid.textContent = '';
+        }
+    </script>
     </body>
     </html>

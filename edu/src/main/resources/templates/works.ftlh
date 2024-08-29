@@ -287,7 +287,6 @@
         </div>
     </div>
 </div>
-
 <script>
     function getParametrByName(name) {
         let url = new URL(window.location.href);
