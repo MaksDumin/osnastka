@@ -44,6 +44,10 @@ import java.util.UUID;
         private List<Image> images = new ArrayList<>();
         private String previewImageId;
         private LocalDateTime dateOfCreated;
+
+        @OneToOne (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+        @JoinColumn(name = "pasport_id", referencedColumnName = "id")
+        private Pasport pasport;
         @PrePersist
         private void init(){
             dateOfCreated = LocalDateTime.now();

@@ -34,6 +34,12 @@
     <b>Количество: </b>${works.qty}<br>
     <b>Склад: </b>${works.storage}<br>
     <b>Склад хранения: </b>${works.parentStorage}<br>
+    <#--Ссылка на PDF файл-->
+    <#if works.pasport??>
+        <b>Паспорт: </b> <a href="/pasport/${works.pasport.id}" target="_blank">Посмотреть паспорт</a><br>
+        <#else>
+        Паспорт отсутствует
+    </#if>
     <div class="modal fade" id="exampleStorage" tabindex="-1" aria-labelledby="exampleStorageLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

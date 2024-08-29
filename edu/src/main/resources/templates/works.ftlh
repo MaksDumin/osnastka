@@ -279,7 +279,8 @@
             <br>
             <input type="file" name="file1" class="form-control">
             <br>
-                    <input type="submit" class="btn btn-success" value="Добавить оснастку">
+            <input type="file" class="form-control" id="pdfFile" name="pdfFile" accept=".pdf" placeholder="Фото/Чертёж">
+                    <input type="submit" class="btn btn-success" value="Добавить оснастку" placeholder="Паспорт">
             <br>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Закрыть</button>
             <hr>

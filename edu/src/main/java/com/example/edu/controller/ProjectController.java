@@ -56,8 +56,8 @@ public class ProjectController {
     }
 
     @PostMapping("/work/create")
-    public String createWork(@RequestParam("file1") MultipartFile file1, Work work) throws IOException {
-        editWorkServices.saveWork(work, file1);
+    public String createWork(@RequestParam("file1") MultipartFile file1, @RequestParam("pdfFile") MultipartFile pdfFile, Work work) throws IOException {
+        editWorkServices.saveWork(work, file1, pdfFile);
         return "redirect:/";
     }
 
