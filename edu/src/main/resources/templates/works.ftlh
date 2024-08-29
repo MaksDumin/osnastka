@@ -1,7 +1,6 @@
 <!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
-
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -96,32 +95,52 @@
     </script>
 </head>
 <body>
+<div class="container-fluid">
 <h3 style="margin-left: 1vh">Доступная оснастка</h3>
-
 <form action="/" method="get" id = "searchForm">
+    <div class="container-fluid">
+        <div class="row mb-2" >
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-left: 1vh"><i class="bi bi-plus-lg"> Добавить оснастку</i></button>
+            </div>
+        </div>
+        </div>
     <label for="search" class="form-label" style="margin-left: 1vh">Поиск оснастки</label>
-    <div class="container" style="max-width: 100%">
-        <div class="row" style="max-width: 100%">
-            <div class="col-sm-3" style="max-width: 100%">
-                <input type="text" class="form-control" id="search" style="max-width: 100%" placeholder="Введите наименование оснастки" name="designation"> <br>
+    <div class="container-f">
+        <div class="row mb-2">
+            <div class="col-auto">
+                <div class="input-group">
+                <input type="text" class="form-control" id="search" placeholder="Поиск оснастки" name="designation">
+                <button type="submit" class="btn btn-link" style="margin-right: 1%"><i class="bi bi-search"></i> </button>
+                <button type="submit" class="btn btn-link" onclick="resetDesignation()"><i class="bi bi-x-lg"></i></button>
+                </div>
             </div>
-            <div class="col-sm-1">
-                <input type="submit" class="btn btn-primary" value="Поиск"/>
-            </div>
-          <div class="col-sm-1">
-                <input type="submit" class="btn btn-primary" value="Очистить поиск" onclick="resetDesignation()">
-            </div>
-            <input type="hidden" name = "storage" id="storage" value="">
         </div>
     </div>
-    <!-- Кнопка-триггер модального окна -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
-            style="margin-left: 1vh">
-        Добавить новую оснастку
-    </button>
-    <br><br>
+    <div class="container">
+            <div class="row g-0">
+                <div class="col-auto">
+                    <div class="input-group">
+                    <select class="form-select" id="storageSelect">
+                        <option value="" disabled selected hidden>Сортировка по складу</option>
+                        <option value="Цех 1">Цех 1</option>
+                        <option value="Цех 3">Цех 3</option>
+                        <option value="Цех 4">Цех 4</option>
+                        <option value="Цех 5">Цех 5</option>
+                        <option value="Цех 6">Цех 6</option>
+                        <option value="Цех 7">Цех 7</option>
+                        <option value="Цех 8">Цех 8</option>
+                        <option value="УИО">УПИО</option>
+                    </select>
+                    <button type="submit" class="btn btn-link" onclick="resetStorage()"><i class="bi bi-x-lg"></i></button>
+            </div>
+                </div>
+            </div>
+    </div>
+            <input type="hidden" name = "storage" id="storage" value="">
+    <br>
 </form>
-
+    <div class="table-container">
 <table id="equipmentTable" class="table table-bordered table-hover table-sm">
     <thead class="table table-success">
     <tr>
@@ -133,6 +152,7 @@
         <th scope="col">Детально</th>
     </tr>
     </thead>
+    <div class="row" id="bot">
     <#list works as work>
         <tbody class="table-light">
         <tr>
@@ -148,9 +168,11 @@
         <h3>Оснастки нет</h3>
     </#list>
 </table>
+    </div>
+    </div>
+</div>
 </div>
 <hr>
-
 <!-- Модальное окно -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -318,6 +340,65 @@
     th.sortable.desc:after {
         content: '\25BC';
     }
+    .table-container {
+        width: 100%;
+        overflow-x: auto;
+    }
+    table {
+        width: 100%;
+        table-layout: fixed;
+        word-wrap: break-word;
+    }
+    th, td {
+        white-space: nowrap;
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const storageSelect = document.getElementById('storageSelect');
+        const storageInput = document.getElementById('storage');
+        storageSelect.addEventListener('change', function () {
+            storageInput.value = storageSelect.value;
+            let form = document.getElementById('searchForm');
+            let  url = new URL(form.action, window.location.origin);
+            url.searchParams.set('storage', storageSelect.value);
+            window.location.href = url.toString();
+        })
+    })
+    function resetStorage(){
+        let url = new URL (window.location.href);
+        url.searchParams.delete('storage');
+        document.getElementById('storage').value = '';
+        window.location.href = url.toString();
+    }
+</script>
+<style>
+    .container {
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    #top {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background-color: white;
+        padding: 10px 0;
+    }
+
+    .table-container {
+        max-height: 500px;
+        overflow-y: auto;
+        position: relative;
+    }
+    .table-container thead th {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background-color: #d4edda;
+    }
+
 </style>
 </body>
 </html>
