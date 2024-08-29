@@ -101,7 +101,7 @@
     <div class="container-fluid">
         <div class="row mb-2" >
             <div class="d-flex justify-content-end">
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-left: 1vh"><i class="bi bi-plus-lg"> Добавить оснастку</i></button>
+                <button type="button" class="btn btn-transparent" data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-left: 1vh"><i class="bi bi-plus-lg"> Добавить оснастку</i></button>
             </div>
         </div>
         </div>
@@ -110,8 +110,10 @@
         <div class="row mb-2">
             <div class="col-auto">
                 <div class="input-group">
+                    <div class="input-container">
                 <input type="text" class="form-control" id="search" placeholder="Поиск оснастки" name="designation">
-                <button type="submit" class="btn btn-link" style="margin-right: 1%"><i class="bi bi-search"></i> </button>
+                <button type="submit" class="btn btn-link search-btn" style="margin-right: 1%"><i class="bi bi-search"></i> </button>
+                        </div>
                 <button type="submit" class="btn btn-link" onclick="resetDesignation()"><i class="bi bi-x-lg"></i></button>
                 </div>
             </div>
@@ -234,7 +236,7 @@
                         <input type="text" aria-label="Ду" class="form-control is-invalid" placeholder="Ду" id="du" required>
                         <input type="text" aria-label="Pу" class="form-control is-invalid" placeholder="Pу" id="pu" required>
                         <input type="text" aria-label="Диаметр" class="form-control is-invalid" placeholder="Диаметр" id="diam" required>
-                        <input type="text" aria-label="Исполнение" class="form-control is-invalid" placeholder="Исполнение" id="ispol"required >
+                        <input type="text" aria-label="Исполнение" class="form-control is-invalid" placeholder="Исполнение" id="ispol"required>
                     </div>
                     <br>
                     <textarea class="form-control is-invalid" placeholder="Полное наиименование" id="fullName" required></textarea>
@@ -271,12 +273,11 @@
                     <option value="Цех 8">Цех 8</option>
                     <option value="УИО">УПИО</option>
                 </select><br>
-            <br>
             <div class="input-group">
                     <input type="text" class="form-control" placeholder="Укажите адрес хранения" name="address"/><br>
             </div>
             <br>
-            <input type="file" name="file1" class="form-control"> <br>
+            <input type="file" name="file1" class="form-control">
             <br>
                     <input type="submit" class="btn btn-success" value="Добавить оснастку">
             <br>
@@ -397,7 +398,32 @@
         z-index: 10;
         background-color: #d4edda;
     }
-
+    .input-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+    .input-container .form-control {
+        width: 100%;
+        padding-right: 40px;
+    }
+    .input-container .search-btn {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        border: none;
+        background: transparent;
+        cursor: pointer;
+    }
+    .btn-transparent {
+        background-color: transparent;
+        color: darkgreen;
+    }
+    .btn-transparent:hover {
+        background-color: rgba(144, 238, 144, 0.2);
+        color: darkslateblue;
+    }
 </style>
 </body>
 </html>
