@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table (name = "pasports")
 @Data
@@ -27,4 +30,5 @@ public class Pasport {
 
     @OneToOne (mappedBy = "pasport", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Work work;
+
 }
