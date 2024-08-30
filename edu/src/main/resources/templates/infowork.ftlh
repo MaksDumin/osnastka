@@ -29,6 +29,7 @@
     <b>Наименование оснастки: </b>${works.designation}<br>
     <b>Типа оснастки: </b> <span id="type"></span><br>
     <b>Вид оснастки: </b><span id="vid"></span><br>
+    <b>Исполнение: </b><span id="isp"></span><br>
     <b>Примечание: </b>${works.notes}<br>
     <b>Адрес: </b>${works.address}<br>
     <b>Количество: </b>${works.qty}<br>
@@ -223,6 +224,7 @@
             default:
                 textVid.textContent = '';
         }
+
     </script>
     </body>
     </html>

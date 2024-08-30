@@ -236,7 +236,15 @@
                         <input type="text" aria-label="Ду" class="form-control is-invalid" placeholder="Ду" id="du" required>
                         <input type="text" aria-label="Pу" class="form-control is-invalid" placeholder="Pу" id="pu" required>
                         <input type="text" aria-label="Диаметр" class="form-control is-invalid" placeholder="Диаметр" id="diam" required>
-                        <input type="text" aria-label="Исполнение" class="form-control is-invalid" placeholder="Исполнение" id="ispol"required>
+                        <select type="text" class="form-control is-invalid" placeholder="Исполнение" id="ispol"required>
+                            <option value=""Укажите исполенние></option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                            <option value="F">F</option>
+                            <option value="J">J</option>
+                        </select>
                     </div>
                     <br>
                     <textarea class="form-control is-invalid" placeholder="Полное наиименование" id="fullName" required></textarea>
