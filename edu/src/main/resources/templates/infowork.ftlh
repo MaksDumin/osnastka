@@ -129,6 +129,7 @@
         const a = document.getElementById('succesName').value;
         const textType = document.getElementById('type');
         const textVid = document.getElementById('vid');
+        const textIspol = document.getElementById('isp');
         switch (true) {
             case a.includes('З.'):
                 textType.textContent = 'Заглушка';
@@ -223,6 +224,28 @@
                 break;
             default:
                 textVid.textContent = '';
+        }
+        switch (true) {
+            case a.includes('B'):
+                textIspol.textContent = 'B - Плоское'
+                break;
+            case a.includes('C'):
+                textIspol.textContent = 'C - Шип выступ'
+                break;
+            case a.includes('D'):
+                textIspol.textContent = 'D - Шип впадина'
+                break;
+            case a.includes('E'):
+                textIspol.textContent = 'E - Выступ'
+                break;
+            case a.includes('F'):
+                textIspol.textContent = 'F - Впадина'
+                break;
+            case a.includes('J'):
+                textIspol.textContent = 'J - Овальная прокладка'
+                break;
+            default:
+                textIspol.textContent = '';
         }
 
     </script>

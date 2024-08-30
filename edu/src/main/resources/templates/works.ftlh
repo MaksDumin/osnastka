@@ -63,7 +63,7 @@
                 slechPu = '-';
                 slesh = '-';
                 var fullName = '';
-                fullName = type + vid + number + (harakt.disabled ? '' :  harakt) + slechDu + du + slechPu + pu + (diam.disabled ? '' : (slechD + diam)) + slesh + ispol;
+                fullName = type + vid + number + (harakt.disabled ? '' : harakt) + slechDu + du + slechPu + pu + (diam.disabled ? '' : (slechD + diam)) + slesh + ispol;
                 document.getElementById('succesName').value = fullName;
             } else {
                 document.getElementById('du').disabled = true;
@@ -76,17 +76,18 @@
                 document.getElementById('ispol').classList.remove('is-invalid');
                 slechDu = '';
                 slechPu = '';
-                slechD ='';
+                slechD = '';
                 slesh = '-';
                 fullName = type + vid + number + slesh + harakt;
                 document.getElementById('succesName').value = fullName;
             }
 
-            console.log (fullName);
+            console.log(fullName);
             document.getElementById('fullName').value = fullName;
         }
-        document.addEventListener('DOMContentLoaded', function() {
-            const inputs = ['type', 'vid', 'number','harakt','du','pu','diam','ispol'];
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const inputs = ['type', 'vid', 'number', 'harakt', 'du', 'pu', 'diam', 'ispol'];
             inputs.forEach(id => {
                 document.getElementById(id).addEventListener('input', updateFullName);
             });
@@ -96,82 +97,89 @@
 </head>
 <body>
 <div class="container-fluid">
-<h3 style="margin-left: 1vh">Доступная оснастка</h3>
-<form action="/" method="get" id = "searchForm">
-    <div class="container-fluid">
-        <div class="row mb-2" >
-            <div class="d-flex justify-content-end">
-                <button type="button" class="btn btn-transparent" data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-left: 1vh"><i class="bi bi-plus-lg"> Добавить оснастку</i></button>
-            </div>
-        </div>
-        </div>
-    <label for="search" class="form-label" style="margin-left: 1vh">Поиск оснастки</label>
-    <div class="container-f">
-        <div class="row mb-2">
-            <div class="col-auto">
-                <div class="input-group">
-                    <div class="input-container">
-                <input type="text" class="form-control" id="search" placeholder="Поиск оснастки" name="designation">
-                <button type="submit" class="btn btn-link search-btn" style="margin-right: 1%"><i class="bi bi-search"></i> </button>
-                        </div>
-                <button type="submit" class="btn btn-link" onclick="resetDesignation()"><i class="bi bi-x-lg"></i></button>
+    <h3 style="margin-left: 1vh">Доступная оснастка</h3>
+    <form action="/" method="get" id="searchForm">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-transparent" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal" style="margin-left: 1vh"><i class="bi bi-plus-lg"> Добавить
+                            оснастку</i></button>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="container">
+        <label for="search" class="form-label" style="margin-left: 1vh">Поиск оснастки</label>
+        <div class="container-f">
+            <div class="row mb-2">
+                <div class="col-auto">
+                    <div class="input-group">
+                        <div class="input-container">
+                            <input type="text" class="form-control" id="search" placeholder="Поиск оснастки"
+                                   name="designation">
+                            <button type="submit" class="btn btn-link search-btn" style="margin-right: 1%"><i
+                                        class="bi bi-search"></i></button>
+                        </div>
+                        <button type="submit" class="btn btn-link" onclick="resetDesignation()"><i
+                                    class="bi bi-x-lg"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
             <div class="row g-0">
                 <div class="col-auto">
                     <div class="input-group">
-                    <select class="form-select" id="storageSelect">
-                        <option value="" disabled selected hidden>Сортировка по складу</option>
-                        <option value="Цех 1">Цех 1</option>
-                        <option value="Цех 3">Цех 3</option>
-                        <option value="Цех 4">Цех 4</option>
-                        <option value="Цех 5">Цех 5</option>
-                        <option value="Цех 6">Цех 6</option>
-                        <option value="Цех 7">Цех 7</option>
-                        <option value="Цех 8">Цех 8</option>
-                        <option value="УИО">УПИО</option>
-                    </select>
-                    <button type="submit" class="btn btn-link" onclick="resetStorage()"><i class="bi bi-x-lg"></i></button>
-            </div>
+                        <select class="form-select" id="storageSelect">
+                            <option value="" disabled selected hidden>Сортировка по складу</option>
+                            <option value="Цех 1">Цех 1</option>
+                            <option value="Цех 3">Цех 3</option>
+                            <option value="Цех 4">Цех 4</option>
+                            <option value="Цех 5">Цех 5</option>
+                            <option value="Цех 6">Цех 6</option>
+                            <option value="Цех 7">Цех 7</option>
+                            <option value="Цех 8">Цех 8</option>
+                            <option value="УИО">УПИО</option>
+                        </select>
+                        <button type="submit" class="btn btn-link" onclick="resetStorage()"><i class="bi bi-x-lg"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
-    </div>
-            <input type="hidden" name = "storage" id="storage" value="">
-    <br>
-</form>
+        </div>
+        <input type="hidden" name="storage" id="storage" value="">
+        <br>
+    </form>
     <div class="table-container">
-<table id="equipmentTable" class="table table-bordered table-hover table-sm">
-    <thead class="table table-success">
-    <tr>
-        <th scope="col" class="sortable">Наименование оснастки</th>
-        <th scope="col">Примечание</th>
-        <th scope="col">Кол-во</th>
-        <th scope="col" class="sortable">Склад</th>
-        <th scope="col">Адрес</th>
-        <th scope="col">Детально</th>
-    </tr>
-    </thead>
-    <div class="row" id="bot">
-    <#list works as work>
-        <tbody class="table-light">
-        <tr>
-            <th scope="row">${work.designation}</th>
-            <th scope="row">${work.notes}</th>
-            <th scope="row">${work.qty}</th>
-            <th scope="row">${work.storage}</th>
-            <th scope="row">${work.address}</th>
-            <th scope="row"><a href="/work/${work.id}"><i class="bi bi-arrow-up-right-square-fill fa-2xs"></i></a></th>
-        </tr>
-        </tbody>
-    <#else>
-        <h3>Оснастки нет</h3>
-    </#list>
-</table>
+        <table id="equipmentTable" class="table table-bordered table-hover table-sm">
+            <thead class="table table-success">
+            <tr>
+                <th scope="col" class="sortable">Наименование оснастки</th>
+                <th scope="col">Примечание</th>
+                <th scope="col">Кол-во</th>
+                <th scope="col" class="sortable">Склад</th>
+                <th scope="col">Адрес</th>
+                <th scope="col">Детально</th>
+            </tr>
+            </thead>
+            <div class="row" id="bot">
+                <#list works as work>
+                    <tbody class="table-light">
+                    <tr>
+                        <th scope="row">${work.designation}</th>
+                        <th scope="row">${work.notes}</th>
+                        <th scope="row">${work.qty}</th>
+                        <th scope="row">${work.storage}</th>
+                        <th scope="row">${work.address}</th>
+                        <th scope="row"><a href="/work/${work.id}"><i
+                                        class="bi bi-arrow-up-right-square-fill fa-2xs"></i></a></th>
+                    </tr>
+                    </tbody>
+                <#else>
+                    <h3>Оснастки нет</h3>
+                </#list>
+        </table>
     </div>
-    </div>
+</div>
 </div>
 </div>
 <hr>
@@ -180,64 +188,72 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Заголовок модального окна</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Создание новой записи</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
             <div class="modal-body">
                 <form action="/work/create" method="post" enctype="multipart/form-data" class="was-validated">
-                        <div class="mb-3">
-                            <select class="form-select is-invalid" aria-label="Выбор типа оснастки" id="type" required aria-label="select example">
-                                <option value="">Выбор типа оснастки:</option>
-                                <option value="З.">Заглушка</option>
-                                <option value="К.">Кондуктор</option>
-                                <option value="М.">Мебель</option>
-                                <option value="П.">Приспособления</option>
-                                <option value="С.">Стенд</option>
-                                <option value="Ш.">Шаблон</option>
-                            </select>
-                        </div>
-                        <br>
-                        <div class="mb-2">
-                            <select class="form-select is-invalid" aria-label="Назначение (вид) оснастки" id="vid" required aria-label="select example">
-                                <option value="">Назначение (вид) оснастки:</option>
-                                <option value="АК-">Антикоррозионные работы</option>
-                                <option value="ВН-">Вспомогательного назначения</option>
-                                <option value="ГИ-">Гидроиспытательные работы</option>
-                                <option value="КР-">Крепёжные работы</option>
-                                <option value="ЛГ-">Листогибочные работы</option>
-                                <option value="МК-">Маркировочные работы</option>
-                                <option value="ОП-">Опорно-поддерживающая оснастка</option>
-                                <option value="ПИ-">Пневмоиспытательные работы</option>
-                                <option value="ПО-">Подготовительные работы</option>
-                                <option value="ПР-">Прочего назначения</option>
-                                <option value="ПШ-">Прессово-штамповые работы</option>
-                                <option value="СБ-">Сборочные работы</option>
-                                <option value="СВ-">Сварочные работы</option>
-                                <option value="СЛ-">Слесарные работы</option>
-                                <option value="СР-">Сверлильные работы</option>
-                                <option value="СТ-">Строгальные работы</option>
-                                <option value="ТГ-">Трубогибочные работы</option>
-                                <option value="ТК-">Токарные работы</option>
-                                <option value="ТО-">Термическая обработка</option>
-                                <option value="ТП-">Транспортировочные работы</option>
-                                <option value="ТР-">Термическая обработка</option>
-                                <option value="УП-">Упаковочные работы</option>
-                                <option value="ФЗ-">Фрезерные работы</option>
-                            </select>
-                        </div>
-                        <br>
-                        <div class="mb-2">
-                            <textarea class="form-control is-invalid" id="number" placeholder="Порядковый номер" required></textarea>
-                        </div>
-                    <br>
-                    <input type="text" aria-label="Диаметр" class="form-control is-invalid" placeholder="Характеристики" id="harakt" required>
-                    <br>
+                    <div class="mb-3">
+                        <select class="form-select is-invalid" aria-label="Выбор типа оснастки" id="type" required
+                                aria-label="select example">
+                            <option value="">Выбор типа оснастки:</option>
+                            <option value="З.">Заглушка</option>
+                            <option value="К.">Кондуктор</option>
+                            <option value="М.">Мебель</option>
+                            <option value="П.">Приспособления</option>
+                            <option value="С.">Стенд</option>
+                            <option value="Ш.">Шаблон</option>
+                        </select>
+                    </div>
+                    <p/>
+                    <div class="mb-2">
+                        <select class="form-select is-invalid" aria-label="Назначение (вид) оснастки" id="vid" required
+                                aria-label="select example">
+                            <option value="">Назначение (вид) оснастки:</option>
+                            <option value="АК-">Антикоррозионные работы</option>
+                            <option value="ВН-">Вспомогательного назначения</option>
+                            <option value="ГИ-">Гидроиспытательные работы</option>
+                            <option value="КР-">Крепёжные работы</option>
+                            <option value="ЛГ-">Листогибочные работы</option>
+                            <option value="МК-">Маркировочные работы</option>
+                            <option value="ОП-">Опорно-поддерживающая оснастка</option>
+                            <option value="ПИ-">Пневмоиспытательные работы</option>
+                            <option value="ПО-">Подготовительные работы</option>
+                            <option value="ПР-">Прочего назначения</option>
+                            <option value="ПШ-">Прессово-штамповые работы</option>
+                            <option value="СБ-">Сборочные работы</option>
+                            <option value="СВ-">Сварочные работы</option>
+                            <option value="СЛ-">Слесарные работы</option>
+                            <option value="СР-">Сверлильные работы</option>
+                            <option value="СТ-">Строгальные работы</option>
+                            <option value="ТГ-">Трубогибочные работы</option>
+                            <option value="ТК-">Токарные работы</option>
+                            <option value="ТО-">Термическая обработка</option>
+                            <option value="ТП-">Транспортировочные работы</option>
+                            <option value="ТР-">Термическая обработка</option>
+                            <option value="УП-">Упаковочные работы</option>
+                            <option value="ФЗ-">Фрезерные работы</option>
+                        </select>
+                    </div>
+                    <p/>
+                    <div class="mb-2">
+                        <textarea class="form-control is-invalid" id="number" placeholder="Порядковый номер"
+                                  required></textarea>
+                    </div>
+                    <p/>
+                    <input type="text" aria-label="Диаметр" class="form-control is-invalid" placeholder="Характеристики"
+                           id="harakt" required>
+                    <p/>
                     <div class="input-group">
-                        <input type="text" aria-label="Ду" class="form-control is-invalid" placeholder="Ду" id="du" required>
-                        <input type="text" aria-label="Pу" class="form-control is-invalid" placeholder="Pу" id="pu" required>
-                        <input type="text" aria-label="Диаметр" class="form-control is-invalid" placeholder="Диаметр" id="diam" required>
-                        <select type="text" class="form-control is-invalid" placeholder="Исполнение" id="ispol"required>
-                            <option value=""Укажите исполенние></option>
+                        <input type="text" aria-label="Ду" class="form-control is-invalid" placeholder="Ду" id="du"
+                               required>
+                        <input type="text" aria-label="Pу" class="form-control is-invalid" placeholder="Pу" id="pu"
+                               required>
+                        <input type="text" aria-label="Диаметр" class="form-control is-invalid" placeholder="Диаметр"
+                               id="diam" required>
+                        <select type="text" class="form-control is-invalid" placeholder="Исполнение" id="ispol"
+                                required>
+                            <option value="" Укажите исполенние></option>
                             <option value="B">B</option>
                             <option value="C">C</option>
                             <option value="D">D</option>
@@ -246,32 +262,20 @@
                             <option value="J">J</option>
                         </select>
                     </div>
-                    <br>
-                    <textarea class="form-control is-invalid" placeholder="Полное наиименование" id="fullName" required></textarea>
+                    <p/>
+                    <textarea class="form-control is-invalid" placeholder="Полное наиименование" id="fullName"
+                              required></textarea>
             </div>
-                    <input type="text" id="succesName" class="form-control" placeholder="Введите шифр и наименование" name="designation" style="visibility: hidden" required/>
+            <input type="text" id="succesName" class="form-control" placeholder="Введите шифр и наименование"
+                   name="designation" style="visibility: hidden" required/>
 
-                    <input type="text" class="form-control" placeholder="Укажите для чего применяется"
-                                       name="notes"/>
-            <br>
-            <div class="input-group was-validated" >
-                    <input type="text" class="form-control is-invalid"  placeholder="Укажите кол-во" name="qty" required/><br>
-                    <select type="text" class="form-select is-invalid" name="storage" required>
-                        <option value="">Укажите склад</option>
-                        <option value="Цех 1">Цех 1</option>
-                        <option value="Цех 3">Цех 3</option>
-                        <option value="Цех 4">Цех 4</option>
-                        <option value="Цех 5">Цех 5</option>
-                        <option value="Цех 6">Цех 6</option>
-                        <option value="Цех 7">Цех 7</option>
-                        <option value="Цех 8">Цех 8</option>
-                        <option value="УИО">УПИО</option>
-                    </select><br>
-                </div>
-            <br>
-                <select type="text" class="form-select" name="parentStorage" required>
-                    <option value="">Укажите склад хранения</option>
-                    <option value="-">-</option>
+            <input type="text" class="form-control" placeholder="Укажите для чего применяется"
+                   name="notes"/>
+            <p/>
+            <div class="input-group was-validated">
+                <input type="text" class="form-control is-invalid" placeholder="Укажите кол-во" name="qty" required/>
+                <select type="text" class="form-select is-invalid" name="storage" required>
+                    <option value="">Укажите склад</option>
                     <option value="Цех 1">Цех 1</option>
                     <option value="Цех 3">Цех 3</option>
                     <option value="Цех 4">Цех 4</option>
@@ -280,33 +284,50 @@
                     <option value="Цех 7">Цех 7</option>
                     <option value="Цех 8">Цех 8</option>
                     <option value="УИО">УПИО</option>
-                </select><br>
+                </select>
+            </div>
+            <br>
+            <select type="text" class="form-select" name="parentStorage" required>
+                <option value="">Укажите склад хранения</option>
+                <option value="-">-</option>
+                <option value="Цех 1">Цех 1</option>
+                <option value="Цех 3">Цех 3</option>
+                <option value="Цех 4">Цех 4</option>
+                <option value="Цех 5">Цех 5</option>
+                <option value="Цех 6">Цех 6</option>
+                <option value="Цех 7">Цех 7</option>
+                <option value="Цех 8">Цех 8</option>
+                <option value="УИО">УПИО</option>
+            </select>
+            <p/>
             <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Укажите адрес хранения" name="address"/><br>
+                <input type="text" class="form-control" placeholder="Укажите адрес хранения" name="address"/>
             </div>
             <br>
             <input type="file" name="file1" class="form-control">
-            <br>
+            <p/>
             <input type="file" class="form-control" id="pdfFile" name="pdfFile" accept=".pdf" placeholder="Фото/Чертёж">
-                    <input type="submit" class="btn btn-success" value="Добавить оснастку" placeholder="Паспорт">
             <br>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Закрыть</button>
+            <input type="submit" class="btn btn-success" value="Добавить оснастку">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Закрыть</button>
             <hr>
-                </form>
-            </div>
+            </form>
         </div>
     </div>
+</div>
 </div>
 <script>
     function getParametrByName(name) {
         let url = new URL(window.location.href);
         return url.searchParams.get(name);
     }
+
     let storageValue = getParametrByName('storage');
     if (storageValue) {
         document.getElementById('storage').value = storageValue;
         storageValue = getParametrByName('storage');
-        }
+    }
+
     function resetDesignation() {
         document.getElementById('search').value = '';
         let form = document.getElementById('searchForm');
@@ -316,14 +337,14 @@
     }
 </script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const getCellValue = (row, index) => row.children[index].innerText || row.children[index].textContent;
 
         const comparer = (index, asc) => (a, b) => ((v1, v2) =>
                 v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2)
         )(getCellValue(asc ? a : b, index), getCellValue(asc ? b : a, index));
 
-        document.querySelectorAll('th.sortable').forEach(th => th.addEventListener('click', function() {
+        document.querySelectorAll('th.sortable').forEach(th => th.addEventListener('click', function () {
             const table = th.closest('table');
             Array.from(table.querySelectorAll('tbody > tr'))
                 .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
@@ -337,27 +358,33 @@
     th.sortable {
         cursor: pointer;
     }
+
     th.sortable :after {
         content: '\25B2';
         float: right;
         margin-left: 5px;
         opacity: 0.5;
     }
+
     th.sortable.asc:after {
         content: '\25B2';
     }
+
     th.sortable.desc:after {
         content: '\25BC';
     }
+
     .table-container {
         width: 100%;
         overflow-x: auto;
     }
+
     table {
         width: 100%;
         table-layout: fixed;
         word-wrap: break-word;
     }
+
     th, td {
         white-space: nowrap;
     }
@@ -369,13 +396,14 @@
         storageSelect.addEventListener('change', function () {
             storageInput.value = storageSelect.value;
             let form = document.getElementById('searchForm');
-            let  url = new URL(form.action, window.location.origin);
+            let url = new URL(form.action, window.location.origin);
             url.searchParams.set('storage', storageSelect.value);
             window.location.href = url.toString();
         })
     })
-    function resetStorage(){
-        let url = new URL (window.location.href);
+
+    function resetStorage() {
+        let url = new URL(window.location.href);
         url.searchParams.delete('storage');
         document.getElementById('storage').value = '';
         window.location.href = url.toString();
@@ -388,6 +416,7 @@
         margin-left: 0;
         margin-right: 0;
     }
+
     #top {
         position: sticky;
         top: 0;
@@ -401,21 +430,25 @@
         overflow-y: auto;
         position: relative;
     }
+
     .table-container thead th {
         position: sticky;
         top: 0;
         z-index: 10;
         background-color: #d4edda;
     }
+
     .input-container {
         position: relative;
         display: flex;
         align-items: center;
     }
+
     .input-container .form-control {
         width: 100%;
         padding-right: 40px;
     }
+
     .input-container .search-btn {
         position: absolute;
         right: 5px;
@@ -425,10 +458,12 @@
         background: transparent;
         cursor: pointer;
     }
+
     .btn-transparent {
         background-color: transparent;
         color: darkgreen;
     }
+
     .btn-transparent:hover {
         background-color: rgba(144, 238, 144, 0.2);
         color: darkslateblue;
