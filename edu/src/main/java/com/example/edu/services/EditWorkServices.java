@@ -31,23 +31,23 @@ public class EditWorkServices {
     public Specification<Work> getStorage (String storage) {
             return null;
     }
-
+@Transactional
     public void saveWork(Work work, MultipartFile file1, MultipartFile pdfFile) throws IOException{
         log.info("Новая запись в таблице сохранена. Designation {}", work.getDesignation());
         log.info("Hibernate: select w1_0.id,w1_0.address,w1_0.date_of_created,w1_0.designation,w1_0.notes,w1_0.preview_image_id,w1_0.qty,w1_0.storage from works w1_0 where lower(w1_0.designation) = lower(?)");
 
         if (pdfFile != null && !pdfFile.isEmpty()) {
-            boolean fileExists = pasportRepository.existsByFileName(pdfFile.getOriginalFilename());
-            if (!fileExists) {
-                log.info("файл с именем {} уже существует, не добавляем", pdfFile.getOriginalFilename());
-            } else {
+//            boolean fileExists = pasportRepository.existsByFileName(pdfFile.getOriginalFilename());
+//            if (fileExists) {
+//                log.info("файл с именем {} уже существует, не добавляем", pdfFile.getOriginalFilename());
+//            } else {
                 Pasport pasport = new Pasport();
                 pasport.setFileName(pdfFile.getOriginalFilename());
                 pasport.setFileType(pdfFile.getContentType());
                 pasport.setData(pdfFile.getBytes());
                 pasportRepository.save(pasport);
                 work.setPasport(pasport);
-            }
+
         }
         Work existingWork = workRepository.findByDesignationAndStorageIgnoreCase(work.getDesignation(), work.getStorage())
                 .stream()
