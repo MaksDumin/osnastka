@@ -25,6 +25,9 @@ import java.util.UUID;
         @Column (name = "designation", columnDefinition = "text")
         private String designation;
 
+        @Column (name = "names")
+        private  String names;
+
         @Column (name = "notes")
         private String notes;
 
@@ -55,7 +58,6 @@ import java.util.UUID;
                 this.id = UUID.randomUUID().toString();
             }
         }
-
         public void addImageToWork (Image image) {
             image.setWork(this);
             images.add(image);

@@ -47,7 +47,6 @@ public class EditWorkServices {
                 pasport.setData(pdfFile.getBytes());
                 pasportRepository.save(pasport);
                 work.setPasport(pasport);
-
         }
         Work existingWork = workRepository.findByDesignationAndStorageIgnoreCase(work.getDesignation(), work.getStorage())
                 .stream()
@@ -168,6 +167,7 @@ public class EditWorkServices {
         } else {
             Work newWork = new Work();
             newWork.setDesignation(exisitngWork.getDesignation());
+            newWork.setNames(exisitngWork.getNames());
             newWork.setParentStorage(exisitngWork.getParentStorage());
             newWork.setStorage(newStorage);
             newWork.setAddress(newAddress);

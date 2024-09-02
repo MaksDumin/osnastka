@@ -66,6 +66,16 @@
                 fullName = type + vid + number + (harakt.disabled ? '' : harakt) + slechDu + du + slechPu + pu + (diam.disabled ? '' : (slechD + diam)) + slesh + ispol;
                 document.getElementById('succesName').value = fullName;
             } else {
+                const flexChecked = document.getElementById("flex").checked;
+                if (flexChecked) {
+                    document.getElementById('harakt').disabled = false;
+                    var fullName = type + vid + number + "-" + harakt;
+                } else {
+                    document.getElementById('harakt').disabled = true;
+                    document.getElementById('harakt').classList.remove('is-invalid');
+                    document.getElementById('harakt').value = '';
+                    var fullName = type + vid + number;
+                }
                 document.getElementById('du').disabled = true;
                 document.getElementById('pu').disabled = true;
                 document.getElementById('diam').disabled = true;
@@ -78,10 +88,8 @@
                 slechPu = '';
                 slechD = '';
                 slesh = '-';
-                fullName = type + vid + number + slesh + harakt;
                 document.getElementById('succesName').value = fullName;
             }
-
             console.log(fullName);
             document.getElementById('fullName').value = fullName;
         }
@@ -153,7 +161,8 @@
         <table id="equipmentTable" class="table table-bordered table-hover table-sm">
             <thead class="table table-success">
             <tr>
-                <th scope="col" class="sortable">Наименование оснастки</th>
+                <th scope="col" class="sortable">Шифр оснастки</th>
+                <th scope="col">Наименование</th>
                 <th scope="col">Примечание</th>
                 <th scope="col">Кол-во</th>
                 <th scope="col" class="sortable">Склад</th>
@@ -166,6 +175,7 @@
                     <tbody class="table-light">
                     <tr>
                         <th scope="row">${work.designation}</th>
+                        <th scope="row">${work.names}</th>
                         <th scope="row">${work.notes}</th>
                         <th scope="row">${work.qty}</th>
                         <th scope="row">${work.storage}</th>
@@ -236,13 +246,20 @@
                         </select>
                     </div>
                     <p/>
+                    <input type="text" aria-label="Наименование" class = "form-control is-invalid" placeholder="Введите наименовние" id="names" name="names" required >
+                    <p/>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="flex">
+                        <label class="form-check-label" for="flex">Наличие характеристики</label>
+                    </div>
+                    <p/>
                     <div class="mb-2">
                         <textarea class="form-control is-invalid" id="number" placeholder="Порядковый номер"
                                   required></textarea>
                     </div>
                     <p/>
-                    <input type="text" aria-label="Диаметр" class="form-control is-invalid" placeholder="Характеристики"
-                           id="harakt" required>
+                    <input type="text" aria-label="Характеристики" class="form-control" placeholder="Характеристики"
+                           id="harakt">
                     <p/>
                     <div class="input-group">
                         <input type="text" aria-label="Ду" class="form-control is-invalid" placeholder="Ду" id="du"
@@ -467,6 +484,14 @@
     .btn-transparent:hover {
         background-color: rgba(144, 238, 144, 0.2);
         color: darkslateblue;
+    }
+    .table-container th, .table-container td {
+        word-wrap: break-word;
+        word-break: break-all;
+        white-space: normal;
+        overflow-wrap: break-word;
+        text-align: left;
+        vertical-align: middle;
     }
 </style>
 </body>
