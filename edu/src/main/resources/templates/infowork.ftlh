@@ -11,6 +11,10 @@
               integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+                integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css"/>
         <title>Подробнее</title>
         <meta charset="UTF-8">
@@ -21,7 +25,22 @@
     <h4>Подробнее</h4>
     <#if images??>
     <#list images as img>
+        <a href="#" data-bs-toggle = "modal" data-bs-target = "#imageModal${img.id}">
         <img src="/images/${img.id}" height="200px"/><br><br>
+        </a>
+        <div class="modal fade" id="imageModal${img.id}" tabindex="-1" aria-labelledby="imageModalLabel${img.id}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="imageModalLabel${img.id}">Изображение</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss = "modal" aria-label="Закрыть"></button>
+                    </div>
+                    <div class="moda-body">
+                        <img src="/images/${img.id}" class="img-fluid" alt="Изображение">
+                    </div>
+                </div>
+            </div>
+        </div>
     </#list>
     <#else>
     <p>Изображения отсутствуют</p>
@@ -35,14 +54,16 @@
     <b>Количество: </b>${works.qty}<br>
     <b>Склад: </b>${works.storage}<br>
     <b>Склад хранения: </b>${works.parentStorage}<br>
+
     <#--Ссылка на PDF файл-->
     <#if works.pasport??>
         <b>Паспорт: </b> <a href="/pasport/${works.pasport.id}" target="_blank">Посмотреть паспорт</a><br>
         <#else>
         Паспорт отсутствует
     </#if>
+    <#--Изменение адреса хранения-->
     <div class="modal fade" id="exampleStorage" tabindex="-1" aria-labelledby="exampleStorageLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Перемещение оснастки</h5>
@@ -75,7 +96,6 @@
                                 ${errorMessage}
                             </div>
                         </#if>
-                        <input type="file" id="file1" placeholder="Фотография 1" name = "file1" class="form-control">
                         <br>
                         <button type="submit" class="btn btn-success">Сохранить</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
@@ -84,6 +104,7 @@
             </div>
         </div>
     </div>
+    <#--Удаление запаса-->
     <div class="modal fade" id="exampleDelete" tabindex="-1" aria-labelledby="exampleDeleteLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -108,6 +129,47 @@
             </div>
         </div>
     </div>
+    <#--Изменение файлов-->
+    <form action="/work/update-image/{id}" method="post" enctype="multipart/form-data">
+    <div class="modal fade" id="exampleFile" tabindex="-1" aria-labelledby="exampleFileLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Изменение файлов</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <label>Фотография</label>
+                    <input type="file" class="form-control" name="file1">
+                    <br>
+                    <label>Паспорт</label>
+                    <input type="file" class="form-control" name="file2">
+                    <br>
+                        <button type="submit" class="btn btn-success">Сохранить</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+    <#--Валидация-->
+    <div class="modal fade" id="exampleValid" tabindex="-1" aria-labelledby="exampleValidLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Введите токен</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <input class="form-control" id="validInput" name="validInput" placeholder="Введите токен" data-bs-toggle="popover" data-bs-trigger="manual" data-bs-placeholder="top"
+                    title="Неверный токен!" data-bs-content="За токеном обратитесь к системному администратору">
+                    <br>
+                    <button type="submit" class="btn btn-success" id="goValid">Ввод</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
     <hr>
     <div class="container" style="max-width: 100%">
@@ -121,6 +183,7 @@
                 <button type="submit" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleStorage">Переместить</button>
             </div>
             <div class="col-sm-8">
+                <button type="submit" class="btn btn-warning" data-bs-toggle = "modal" data-bs-target = "#exampleValid">Изменить файлы</button>
             </div>
         </div>
     </div>
@@ -247,7 +310,31 @@
             default:
                 textIspol.textContent = '';
         }
-
+        document.addEventListener("DOMContentLoaded", function () {
+            const validInput = document.getElementById("validInput");
+            const goValidButton = document.getElementById("goValid");
+            const exampleValidModal = new bootstrap.Modal(document.getElementById('exampleValid'));
+            const exampleFileModal = new bootstrap.Modal(document.getElementById('exampleFile'));
+            const popover = new bootstrap.Popover(validInput);
+            goValidButton.addEventListener("click", function () {
+                const token = validInput.value;
+                if (token === "12345") {
+                    exampleValidModal.hide();
+                    exampleFileModal.show();
+                } else {
+                  validInput.classList.add("is-invalid");
+                  popover.show();
+                  setTimeout(function (){
+                      popover.hide();
+                  }, 3000);
+                }
+            });
+            validInput.addEventListener("focus", function (){
+                validInput.value = "";
+                popover.hide();
+                validInput.classList.remove("is-invalid");
+            });
+        });
     </script>
     </body>
     </html>

@@ -68,9 +68,11 @@
             } else {
                 const flexChecked = document.getElementById("flex").checked;
                 if (flexChecked) {
+                    document.getElementById('harakt').hidden = false;
                     document.getElementById('harakt').disabled = false;
                     var fullName = type + vid + number + "-" + harakt;
                 } else {
+                    document.getElementById('harakt').hidden = true;
                     document.getElementById('harakt').disabled = true;
                     document.getElementById('harakt').classList.remove('is-invalid');
                     document.getElementById('harakt').value = '';
@@ -99,6 +101,7 @@
             inputs.forEach(id => {
                 document.getElementById(id).addEventListener('input', updateFullName);
             });
+            document.getElementById('flex').addEventListener('input', updateFullName);
             updateFullName();
         });
     </script>
@@ -248,14 +251,14 @@
                     <p/>
                     <input type="text" aria-label="Наименование" class = "form-control is-invalid" placeholder="Введите наименовние" id="names" name="names" required >
                     <p/>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="flex">
-                        <label class="form-check-label" for="flex">Наличие характеристики</label>
-                    </div>
-                    <p/>
                     <div class="mb-2">
                         <textarea class="form-control is-invalid" id="number" placeholder="Порядковый номер"
                                   required></textarea>
+                    </div>
+                    <p/>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="flex">
+                        <label class="form-check-label" for="flex">Наличие характеристики</label>
                     </div>
                     <p/>
                     <input type="text" aria-label="Характеристики" class="form-control" placeholder="Характеристики"

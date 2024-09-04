@@ -50,6 +50,10 @@ public class ProjectController {
     @GetMapping("/work/{id}")
     public String infoWork(@PathVariable String id, Model model) {
         Work work = editWorkServices.getWorkById(id);
+        if (work == null) {
+            model.addAttribute("errorMessage", "Запись не найдена");
+            return "redirect:/";
+        }
         model.addAttribute("works", work);
         model.addAttribute("images", work.getImages());
         return "infowork";
@@ -93,5 +97,20 @@ public class ProjectController {
             }
         }
         return "redirect:/";
+    }
+    @PostMapping("/work/update-image/{id}")
+    public String updateImage(
+            @PathVariable String id,
+            @RequestParam ("file1") MultipartFile file1,
+            RedirectAttributes redirectAttributes) throws IOException {
+        Work work = editWorkServices.getWorkById(id);
+        if (work == null) {
+            redirectAttributes.addFlashAttribute("erroreMessage", "Запись не найдена");
+            return "redirect:/work/" + id;
+        }
+        if (file1 != null && file1.isEmpty()) {
+            editWorkServices.replaceImages(work, file1);
+        }
+        return "redirect:/work/" + id;
     }
 }
