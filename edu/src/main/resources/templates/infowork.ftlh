@@ -65,7 +65,8 @@
                 <div class="modal-body">
                     <form action="/work/update/${works.id}" method="post" enctype="multipart/form-data">
                         <div class="form-group">
-                            <select type="text" class="form-select" placeholder="Укажите новый склад" name="storage" id="newStorage">
+                            <select type="text" class="form-select" placeholder="Укажите новый склад" name="storage" id="newStorage" data-bs-toggle = "popover" data-bs-trigger = "manual"
+                            data-bs-placeholder="top" title="Текущий склад хранения" data-bs-content="${works.storage}">
                                 <option value="Цех 1">Цех 1</option>
                                 <option value="Цех 3">Цех 3</option>
                                 <option value="Цех 4">Цех 4</option>
@@ -142,6 +143,8 @@
         const textType = document.getElementById('type');
         const textVid = document.getElementById('vid');
         const textIspol = document.getElementById('isp');
+        var modalElement = document.getElementById('exampleStorage');
+        var storageImput = document.getElementById('newStorage');
         switch (true) {
             case a.includes('З.'):
                 textType.textContent = 'Заглушка';
@@ -286,7 +289,16 @@
         //         popover.hide();
         //         validInput.classList.remove("is-invalid");
         //     });
-        // });
+        // })
+        function showPopover() {
+            var popover = new bootstrap.Popover(storageImput, {
+                trigger: 'manual'
+            });
+            popover.show();
+        }
+        modalElement.addEventListener('shown.bs.modal', function (){
+            showPopover();
+        })
     </script>
     </body>
     </html>
