@@ -274,6 +274,7 @@
                         <select type="text" class="form-control is-invalid" placeholder="Исполнение" id="ispol"
                                 required>
                             <option value="" Укажите исполенние></option>
+                            <option value="A">A</option>
                             <option value="B">B</option>
                             <option value="C">C</option>
                             <option value="D">D</option>
@@ -325,8 +326,6 @@
             </div>
             <br>
             <input type="file" name="file1" class="form-control">
-            <p/>
-            <input type="file" class="form-control" id="pdfFile" name="pdfFile" accept=".pdf" placeholder="Фото/Чертёж">
             <br>
             <input type="submit" class="btn btn-success" value="Добавить оснастку">
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Закрыть</button>

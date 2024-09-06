@@ -60,8 +60,8 @@ public class ProjectController {
     }
 
     @PostMapping("/work/create")
-    public String createWork(@RequestParam("file1") MultipartFile file1, @RequestParam("pdfFile") MultipartFile pdfFile, Work work) throws IOException {
-        editWorkServices.saveWork(work, file1, pdfFile);
+    public String createWork(@RequestParam("file1") MultipartFile file1, Work work) throws IOException {
+        editWorkServices.saveWork(work, file1);
         return "redirect:/";
     }
 
@@ -97,20 +97,5 @@ public class ProjectController {
             }
         }
         return "redirect:/";
-    }
-    @PostMapping("/work/update-image/{id}")
-    public String updateImage(
-            @PathVariable String id,
-            @RequestParam ("file1") MultipartFile file1,
-            RedirectAttributes redirectAttributes) throws IOException {
-        Work work = editWorkServices.getWorkById(id);
-        if (work == null) {
-            redirectAttributes.addFlashAttribute("erroreMessage", "Запись не найдена");
-            return "redirect:/work/" + id;
-        }
-        if (file1 != null && file1.isEmpty()) {
-            editWorkServices.replaceImages(work, file1);
-        }
-        return "redirect:/work/" + id;
     }
 }

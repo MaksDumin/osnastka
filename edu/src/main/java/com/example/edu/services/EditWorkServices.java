@@ -32,22 +32,22 @@ public class EditWorkServices {
             return null;
     }
 @Transactional
-    public void saveWork(Work work, MultipartFile file1, MultipartFile pdfFile) throws IOException{
+    public void saveWork(Work work, MultipartFile file1) throws IOException{
         log.info("Новая запись в таблице сохранена. Designation {}", work.getDesignation());
         log.info("Hibernate: select w1_0.id,w1_0.address,w1_0.date_of_created,w1_0.designation,w1_0.notes,w1_0.preview_image_id,w1_0.qty,w1_0.storage from works w1_0 where lower(w1_0.designation) = lower(?)");
 
-        if (pdfFile != null && !pdfFile.isEmpty()) {
-//            boolean fileExists = pasportRepository.existsByFileName(pdfFile.getOriginalFilename());
-//            if (fileExists) {
-//                log.info("файл с именем {} уже существует, не добавляем", pdfFile.getOriginalFilename());
-//            } else {
-                Pasport pasport = new Pasport();
-                pasport.setFileName(pdfFile.getOriginalFilename());
-                pasport.setFileType(pdfFile.getContentType());
-                pasport.setData(pdfFile.getBytes());
-                pasportRepository.save(pasport);
-                work.setPasport(pasport);
-        }
+//        if (pdfFile != null && !pdfFile.isEmpty()) {
+////            boolean fileExists = pasportRepository.existsByFileName(pdfFile.getOriginalFilename());
+////            if (fileExists) {
+////                log.info("файл с именем {} уже существует, не добавляем", pdfFile.getOriginalFilename());
+////            } else {
+//                Pasport pasport = new Pasport();
+//                pasport.setFileName(pdfFile.getOriginalFilename());
+//                pasport.setFileType(pdfFile.getContentType());
+//                pasport.setData(pdfFile.getBytes());
+//                pasportRepository.save(pasport);
+//                work.setPasport(pasport);
+//        }
         Work existingWork = workRepository.findByDesignationAndStorageIgnoreCase(work.getDesignation(), work.getStorage())
                 .stream()
                 .findFirst()
@@ -135,24 +135,24 @@ public class EditWorkServices {
             copiedImage.setPreviewImage(image.isPreviewImage());
             copiedImages.add(copiedImage);
         }
-        Pasport existingPasport = exisitngWork.getPasport();
-        Pasport copiedPasport = null;
-        if (exisitngWork != null) {
-            copiedPasport = new Pasport();
-            copiedPasport.setFileName(existingPasport.getFileName());
-            copiedPasport.setFileType(existingPasport.getFileType());
-            copiedPasport.setData(existingPasport.getData());
-        }
+//        Pasport existingPasport = exisitngWork.getPasport();
+//        Pasport copiedPasport = null;
+//        if (exisitngWork != null) {
+//            copiedPasport = new Pasport();
+//            copiedPasport.setFileName(existingPasport.getFileName());
+//            copiedPasport.setFileType(existingPasport.getFileType());
+//            copiedPasport.setData(existingPasport.getData());
+//        }
         Work existingNewWork = workRepository.findByDesignationAndStorageIgnoreCase(exisitngWork.getDesignation(), newStorage)
                 .stream()
                 .findFirst()
                 .orElse(null);
-        if (existingNewWork != null) {
-            existingNewWork.setQty(existingNewWork.getQty());
-            if (copiedPasport != null) {
-                existingNewWork.setPasport(copiedPasport);
-            }
-        }
+//        if (existingNewWork != null) {
+//            existingNewWork.setQty(existingNewWork.getQty());
+//            if (copiedPasport != null) {
+//                existingNewWork.setPasport(copiedPasport);
+//            }
+//        }
         if (existingNewWork != null) {
             existingNewWork.setQty(existingNewWork.getQty() + quantityToMove);
           for (Image copiedImage :copiedImages) {
@@ -173,9 +173,9 @@ public class EditWorkServices {
             newWork.setAddress(newAddress);
             newWork.setQty(quantityToMove);
             newWork.setNotes(exisitngWork.getNotes());
-            if (copiedPasport != null) {
-                newWork.setPasport(copiedPasport);
-            }
+//            if (copiedPasport != null) {
+//                newWork.setPasport(copiedPasport);
+//            }
             if (file1 != null && file1.getSize() != 0) {
                 Image image1 = toImageEntity(file1);
                 image1.setPreviewImage(true);

@@ -28,7 +28,7 @@ public class Pasport {
     @Column (name = "data", columnDefinition = "LONGBLOB")
     private byte[] data;
 
-    @OneToOne (mappedBy = "pasport", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Work work;
+//    @OneToOne (mappedBy = "pasport", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private Work work;
 
 }
