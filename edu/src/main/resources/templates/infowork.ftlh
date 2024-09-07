@@ -124,11 +124,28 @@
             </div>
         </div>
     </div>
+    <#--Валидация Удаления-->
+    <div class = "modal fade" id="validDelete" tabindex="-1" aria-labelledby="exampleDeleteValidLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleDeleteValidLable">Введите токен администратора</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                   <input type="text" class="form-control" id="validInputDelete" placeholder="Укажите токен">
+                    <br>
+                        <input type="submit" class="btn btn-danger" value="Ввод" id="goValidButton">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+    </div>
+            </div>
+        </div>
+    </div>
     <hr>
     <div class="container" style="max-width: 100%">
         <div class="row" style="max-width: 100%">
             <div class="col-sm-2" style="max-width: 100%">
-                <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleDelete">Удалить</button>
+                <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#validDelete">Удалить</button>
             </div>
             <br>
             <br>
@@ -290,6 +307,31 @@
         //         validInput.classList.remove("is-invalid");
         //     });
         // })
+        $(document).ready(function () {
+            $('#validInputDelete').popover({
+                trigger: 'manual',
+                title: 'Неверный токен',
+                content: 'Обратитесь к системному администратору',
+                placement: 'top',
+                container: 'body'
+            });
+            $('#goValidButton').on('click', function (){
+                const validToken = '681272';
+                const inputToken = $('#validInputDelete').val();
+                if (inputToken === validToken) {
+                    $('#validDelete').modal('hide');
+                    $('#exampleDelete').modal('show');
+                } else {
+                    $('#validInputDelete').addClass('is-invalid');
+                    $('#validInputDelete').popover('show');
+                }
+            });
+            $('#validInputDelete').on('focus', function (){
+                $(this).removeClass('is-invalid');
+                $(this).popover('hide');
+                $(this).val('');
+            });
+        });
         function showPopover() {
             var popover = new bootstrap.Popover(storageImput, {
                 trigger: 'manual'
