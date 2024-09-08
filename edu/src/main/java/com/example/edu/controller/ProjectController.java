@@ -96,6 +96,58 @@ public class ProjectController {
              editWorkServices.handleStorageUpdate(work, storage, address ,quantityToMove, file1);
             }
         }
+        if (file1 != null && file1.isEmpty()) {
+            Image oldImage = work.getImages().stream()
+                    .filter(Image::isPreviewImage)
+                    .findFirst()
+                    .orElse(null);
+            if (oldImage != null) {
+                work.getImages().remove(oldImage);
+                imageRepository.delete(oldImage);
+            }
+            Image newImage = editWorkServices.toImageEntity(file1);
+            newImage.setPreviewImage(true);
+            work.addImageToWork(newImage);
+            work.setPreviewImageId(newImage.getId());
+            editWorkServices.updateWork(work);
+        }
         return "redirect:/";
+    }
+    @PostMapping("/work/update-qty/{id}")
+    public String updateQty(@PathVariable String id, @RequestParam int qty, RedirectAttributes redirectAttributes) {
+        Work work = editWorkServices.getWorkById(id);
+        if (work != null) {
+            work.setQty(qty);
+            editWorkServices.updateWork(work);
+            redirectAttributes.addFlashAttribute("successMessage", "Количество успешно обновлено");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage","Запись не найдена");
+        }
+        return "redirect:/work/" + id;
+    }
+
+    @PostMapping("/work/updateImage/{id}")
+    public String updateWorkImage(@PathVariable String id, @RequestParam ("newImage") MultipartFile newImage, RedirectAttributes redirectAttributes) throws IOException {
+        Work work = editWorkServices.getWorkById(id);
+        if (work == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "error");
+            return "redirect:/";
+        }
+        if (newImage != null && newImage.isEmpty()) {
+            Image image = work.getImages().stream()
+                    .filter(Image :: isPreviewImage)
+                    .findFirst()
+                    .orElse(null);
+            if (image != null) {
+                imageRepository.delete(image);
+            }
+            Image newImageEntity = editWorkServices.toImageEntity(newImage);
+            newImageEntity.setPreviewImage(true);
+            work.addImageToWork(newImageEntity);
+            imageRepository.save(newImageEntity);
+            work.setPreviewImageId(newImageEntity.getId());
+            workRepository.save(work);
+        }
+        return "redirect:/work/" + id;
     }
 }

@@ -54,6 +54,25 @@
     <b>Количество: </b>${works.qty}<br>
     <b>Склад: </b>${works.storage}<br>
     <b>Склад хранения: </b>${works.parentStorage}<br>
+    <#--Изменение количества-->
+    <div class="modal fade" id="exampleQty" tabindex="-1" aria-labelledby="exampleQtyLable" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleQtyLabel">Изменение количества</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss = "modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/work/update-qty/${works.id}" method="post">
+                        <div class="mb-3">
+                            <input type="number" class="form-control" id="qty" name="qty" placeholder = "Укажите новое количество" value="${works.qty} required">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Обновить количество</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <#--Изменение адреса хранения-->
     <div class="modal fade" id="exampleStorage" tabindex="-1" aria-labelledby="exampleStorageLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -110,7 +129,7 @@
                 <div class="modal-body">
                     <form action="/work/delete/${works.id}" method="post">
                         <div class="form-group">
-                            <input type="number" id = "qtyToDelete" class="form-control" placeholder="введите кол-во к списанию" name="quantityToDelete" min="1" max="${works.qty}" required>
+                            <input type="number" id = "qtyToDelete" class="form-control" placeholder="Введите кол-во к списанию" name="quantityToDelete" min="1" max="${works.qty}" required>
                             <br>
                         </div>
                         <#if errorMessage??>
@@ -124,16 +143,16 @@
             </div>
         </div>
     </div>
-    <#--Валидация Удаления-->
-    <div class = "modal fade" id="validDelete" tabindex="-1" aria-labelledby="exampleDeleteValidLabel" aria-hidden="true">
+    <#--Валидация удаления-->
+    <div class = "modal fade" id="valid" tabindex="-1" aria-labelledby="exampleValidLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleDeleteValidLable">Введите токен администратора</h5>
+                    <h5 class="modal-title" id="exampleValidLable">Введите токен администратора</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                 </div>
                 <div class="modal-body">
-                   <input type="text" class="form-control" id="validInputDelete" placeholder="Укажите токен">
+                   <input type="text" class="form-control" id="validInput" placeholder="Укажите токен">
                     <br>
                         <input type="submit" class="btn btn-danger" value="Ввод" id="goValidButton">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
@@ -141,17 +160,62 @@
             </div>
         </div>
     </div>
-    <hr>
+    <#--Валидация количества-->
+    <div class = "modal fade" id="validQty" tabindex="-1" aria-labelledby="exampleValidQtyLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleValidQtyLable">Введите токен администратора</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control" id="validInputQty" placeholder="Укажите токен">
+                    <br>
+                    <input type="submit" class="btn btn-danger" value="Ввод" id="goValidQtyButton">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<#--    &lt;#&ndash;Изменение изображения&ndash;&gt;-->
+<#--    <div class="modal fade" id="replaceImageModal" tabindex="-1" aria-labelledby="replaceImageModalLabel" aria-hidden="true">-->
+<#--        <div class="modal-dialog modal-dialog-centered">-->
+<#--            <div class="modal-content">-->
+<#--                <div class="modal-header">-->
+<#--                    <h5 class="modal-title" id="replaceImageModalLabel">Замена изображения</h5>-->
+<#--                    <button type="button" class="btn-close" data-bs-dismiss = "modal" aria-label="Закрыть"></button>-->
+<#--                </div>-->
+<#--                <div class="modal-body">-->
+<#--                    <form action="/work/updateImage/${works.id}" method="post" enctype="multipart/form-data">-->
+<#--                        <div class="form-group">-->
+<#--                            <input type="file" name="newImage" class="form-control" id="newImage" required>-->
+<#--                        </div>-->
+<#--                        <br>-->
+<#--                        <button type="submit" class="btn btn-success">Сохранить</button>-->
+<#--                        <button type="button" class="btn btn-secondary" data-bs-dismiss = "modal">Закрыть</button>-->
+<#--                    </form>-->
+<#--                </div>-->
+<#--            </div>-->
+<#--        </div>-->
+<#--    </div>-->
+     <hr>
     <div class="container" style="max-width: 100%">
         <div class="row" style="max-width: 100%">
             <div class="col-sm-2" style="max-width: 100%">
-                <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#validDelete">Удалить</button>
+                <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#valid">Удалить</button>
             </div>
             <br>
             <br>
                 <div class="col-sm-2">
                 <button type="submit" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleStorage">Переместить</button>
             </div>
+            <br>
+            <div class="col-sm-2">
+                <button type="submit" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#validQty">Изменить количество</button>
+            </div>
+<#--            <div class="col-sm-2">-->
+<#--                <button type="submit" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#replaceImageModal">Изменить изображение</button>-->
+<#--            </div>-->
         </div>
     </div>
     <br>
@@ -282,33 +346,8 @@
             default:
                 textIspol.textContent = '';
         }
-        // document.addEventListener("DOMContentLoaded", function () {
-        //     const validInput = document.getElementById("validInput");
-        //     const goValidButton = document.getElementById("goValid");
-        //     const exampleValidModal = new bootstrap.Modal(document.getElementById('exampleValid'));
-        //     const exampleFileModal = new bootstrap.Modal(document.getElementById('exampleFile'));
-        //     const popover = new bootstrap.Popover(validInput);
-        //     goValidButton.addEventListener("click", function () {
-        //         const token = validInput.value;
-        //         if (token === "12345") {
-        //             exampleValidModal.hide();
-        //             exampleFileModal.show();
-        //         } else {
-        //           validInput.classList.add("is-invalid");
-        //           popover.show();
-        //           setTimeout(function (){
-        //               popover.hide();
-        //           }, 3000);
-        //         }
-        //     });
-        //     validInput.addEventListener("focus", function (){
-        //         validInput.value = "";
-        //         popover.hide();
-        //         validInput.classList.remove("is-invalid");
-        //     });
-        // })
         $(document).ready(function () {
-            $('#validInputDelete').popover({
+            $('#validInput').popover({
                 trigger: 'manual',
                 title: 'Неверный токен',
                 content: 'Обратитесь к системному администратору',
@@ -317,16 +356,41 @@
             });
             $('#goValidButton').on('click', function (){
                 const validToken = '681272';
-                const inputToken = $('#validInputDelete').val();
+                const inputToken = $('#validInput').val();
                 if (inputToken === validToken) {
-                    $('#validDelete').modal('hide');
+                    $('#valid').modal('hide');
                     $('#exampleDelete').modal('show');
                 } else {
-                    $('#validInputDelete').addClass('is-invalid');
-                    $('#validInputDelete').popover('show');
+                    $('#validInput').addClass('is-invalid');
+                    $('#validInput').popover('show');
                 }
             });
-            $('#validInputDelete').on('focus', function (){
+            $('#validInput').on('focus', function (){
+                $(this).removeClass('is-invalid');
+                $(this).popover('hide');
+                $(this).val('');
+            });
+        });
+        $(document).ready(function () {
+            $('#validInputQty').popover({
+                trigger: 'manual',
+                title: 'Неверный токен',
+                content: 'Обратитесь к системному администратору',
+                placement: 'top',
+                container: 'body'
+            });
+            $('#goValidQtyButton').on('click', function (){
+                const validToken = '681272';
+                const inputToken = $('#validInputQty').val();
+                if (inputToken === validToken) {
+                    $('#validQty').modal('hide');
+                    $('#exampleQty').modal('show');
+                } else {
+                    $('#validInputQty').addClass('is-invalid');
+                    $('#validInputQty').popover('show');
+                }
+            });
+            $('#validInputQty').on('focus', function (){
                 $(this).removeClass('is-invalid');
                 $(this).popover('hide');
                 $(this).val('');

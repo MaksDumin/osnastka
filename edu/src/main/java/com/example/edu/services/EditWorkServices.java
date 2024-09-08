@@ -213,22 +213,22 @@ public class EditWorkServices {
         workRepository.save(existingNewWork);
     }
 
-    public void replaceImages(Work work, MultipartFile newImageFile) throws IOException {
-        Image currentImage = work.getImages().stream()
-                .filter(Image :: isPreviewImage)
-                .findFirst()
-                .orElse(null);
-        if (currentImage != null) {
-            imageRepository.delete(currentImage);
-            work.getImages().remove(currentImage);
-        }
-        Image newImage = toImageEntity(newImageFile);
-        newImage.setPreviewImage(true);
-        newImage.setWork(work);
-        work.addImageToWork(newImage);
-        imageRepository.save(newImage);
-
-        work.setPreviewImageId(newImage.getId());
-        workRepository.save(work);
-    }
+//    public void replaceImages(Work work, MultipartFile newImageFile) throws IOException {
+//        Image currentImage = work.getImages().stream()
+//                .filter(Image :: isPreviewImage)
+//                .findFirst()
+//                .orElse(null);
+//        if (currentImage != null) {
+//            imageRepository.delete(currentImage);
+//            work.getImages().remove(currentImage);
+//        }
+//        Image newImage = toImageEntity(newImageFile);
+//        newImage.setPreviewImage(true);
+//        newImage.setWork(work);
+//        work.addImageToWork(newImage);
+//        imageRepository.save(newImage);
+//
+//        work.setPreviewImageId(newImage.getId());
+//        workRepository.save(work);
+//    }
 }
