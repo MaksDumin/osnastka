@@ -105,15 +105,64 @@
             updateFullName();
         });
     </script>
+    <style>
+        @media (max-width: 768px) {
+            h3 {
+                font-size: 1.5rem;
+                text-align: center;
+                margin-top: 1rem;
+            }
+            #cf {
+                justify-items: center;
+            }
+            .d-none {
+                display: none !important;
+            }
+            #equipmentTable.table {
+                border-collapse: collapse !important;
+            }
+            #equipmentTable.table-bordered {
+                border: none !important;
+            }
+            #equipmentTable.table-hover tbody tr:hover {
+                background-color: transparent !important;
+            }
+            #equipmentTable thead.table {
+                background-color: transparent !important;
+            }
+            #equipmentTable thead .table table-success {
+                background-color: transparent !important;
+            }
+            #equipmentTable tbody.table-light {
+                background-color: transparent !important;
+            }
+            .popover {
+                max-width: 200px;
+                font-size: 0.6rem;
+            }
+            .popover-body {
+                padding: 0.6rem;
+            }
+           .popover-header {
+                font-size: 0.6rem;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="container-fluid">
+<div class="container-fluid" id="cf">
     <h3 style="margin-left: 1vh">Доступная оснастка</h3>
+    <div class="d-flex justify-content-center mb-3">
+    <button class="btn btn-link d-md-none" type="button" data-bs-toggle = "collapse" data-bs-target="#collapsibleContent" aria-expanded="false" aria-controls="collapsibleContent">
+        <i id="showhide" class="bi bi-box-arrow-in-down fs-3" data-bs-toggle="popover" data-bs-trigger="manual"></i>
+    </button>
+    </div>
+    <div class="collapse d-md-block" id="collapsibleContent">
     <form action="/" method="get" id="searchForm">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-transparent" data-bs-toggle="modal"
+                    <button id="create" type="button" class="btn btn-transparent" data-bs-toggle="modal"
                             data-bs-target="#exampleModal" style="margin-left: 1vh"><i class="bi bi-plus-lg"> Добавить
                             оснастку</i></button>
                 </div>
@@ -149,7 +198,7 @@
                             <option value="Цех 6">Цех 6</option>
                             <option value="Цех 7">Цех 7</option>
                             <option value="Цех 8">Цех 8</option>
-                            <option value="УИО">УПИО</option>
+                            <option value="УПИО">УПИО</option>
                         </select>
                         <button type="submit" class="btn btn-link" onclick="resetStorage()"><i class="bi bi-x-lg"></i>
                         </button>
@@ -159,6 +208,7 @@
         </div>
         <input type="hidden" name="storage" id="storage" value="">
         <br>
+        </div>
     </form>
     <div class="table-container">
         <table id="equipmentTable" class="table table-bordered table-hover table-sm">
@@ -166,10 +216,10 @@
             <tr>
                 <th scope="col" class="sortable">Шифр оснастки</th>
                 <th scope="col">Наименование</th>
-                <th scope="col">Примечание</th>
-                <th scope="col">Кол-во</th>
-                <th scope="col" class="sortable">Склад</th>
-                <th scope="col">Адрес</th>
+                <th scope="col" class="d-none d-md-table-cell">Примечание</th>
+                <th scope="col" class="d-none d-md-table-cell">Кол-во</th>
+                <th scope="col" class="d-none d-md-table-cell sortable">Склад</th>
+                <th scope="col" class="d-none d-md-table-cell">Адрес</th>
                 <th scope="col">Детально</th>
             </tr>
             </thead>
@@ -179,10 +229,10 @@
                     <tr>
                         <th scope="row">${work.designation}</th>
                         <th scope="row">${work.names}</th>
-                        <th scope="row">${work.notes}</th>
-                        <th scope="row">${work.qty}</th>
-                        <th scope="row">${work.storage}</th>
-                        <th scope="row">${work.address}</th>
+                        <th scope="row" class="d-none d-md-table-cell">${work.notes}</th>
+                        <th scope="row" class="d-none d-md-table-cell">${work.qty}</th>
+                        <th scope="row" class="d-none d-md-table-cell">${work.storage}</th>
+                        <th scope="row" class="d-none d-md-table-cell">${work.address}</th>
                         <th scope="row"><a href="/work/${work.id}"><i
                                         class="bi bi-arrow-up-right-square-fill fa-2xs"></i></a></th>
                     </tr>
@@ -196,7 +246,7 @@
 </div>
 </div>
 <hr>
-<!-- Модальное окно -->
+<!-- Модальное окно создания -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -304,7 +354,7 @@
                     <option value="Цех 6">Цех 6</option>
                     <option value="Цех 7">Цех 7</option>
                     <option value="Цех 8">Цех 8</option>
-                    <option value="УИО">УПИО</option>
+                    <option value="УПИО">УПИО</option>
                 </select>
             </div>
             <br>
@@ -318,7 +368,7 @@
                 <option value="Цех 6">Цех 6</option>
                 <option value="Цех 7">Цех 7</option>
                 <option value="Цех 8">Цех 8</option>
-                <option value="УИО">УПИО</option>
+                <option value="УПИО">УПИО</option>
             </select>
             <p/>
             <div class="input-group">
@@ -328,6 +378,7 @@
             <input type="file" name="file1" class="form-control">
             <br>
             <input type="submit" class="btn btn-success" value="Добавить оснастку">
+            <p/>
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Закрыть</button>
             <hr>
             </form>
@@ -496,5 +547,26 @@
         vertical-align: middle;
     }
 </style>
+<script>
+    $(document).ready(function () {
+        $('#showhide').popover({
+            trigger: 'manual',
+            title: 'Дополнительные функции',
+            content: 'Нажмите что бы просмотреть',
+            placement: 'right',
+            container: 'body'
+        });
+        function showPopoverInMobile() {
+            if (window.matchMedia("(max-width: 768px)").matches) {
+                var $popoverElement = $('#showhide');
+                $popoverElement.popover('show');
+                setTimeout(function () {
+                    $popoverElement.popover('hide');
+                }, 4000);
+            }
+        }
+        showPopoverInMobile();
+    });
+</script>
 </body>
 </html>

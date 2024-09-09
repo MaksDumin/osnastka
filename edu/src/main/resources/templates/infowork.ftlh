@@ -177,27 +177,6 @@
             </div>
         </div>
     </div>
-<#--    &lt;#&ndash;Изменение изображения&ndash;&gt;-->
-<#--    <div class="modal fade" id="replaceImageModal" tabindex="-1" aria-labelledby="replaceImageModalLabel" aria-hidden="true">-->
-<#--        <div class="modal-dialog modal-dialog-centered">-->
-<#--            <div class="modal-content">-->
-<#--                <div class="modal-header">-->
-<#--                    <h5 class="modal-title" id="replaceImageModalLabel">Замена изображения</h5>-->
-<#--                    <button type="button" class="btn-close" data-bs-dismiss = "modal" aria-label="Закрыть"></button>-->
-<#--                </div>-->
-<#--                <div class="modal-body">-->
-<#--                    <form action="/work/updateImage/${works.id}" method="post" enctype="multipart/form-data">-->
-<#--                        <div class="form-group">-->
-<#--                            <input type="file" name="newImage" class="form-control" id="newImage" required>-->
-<#--                        </div>-->
-<#--                        <br>-->
-<#--                        <button type="submit" class="btn btn-success">Сохранить</button>-->
-<#--                        <button type="button" class="btn btn-secondary" data-bs-dismiss = "modal">Закрыть</button>-->
-<#--                    </form>-->
-<#--                </div>-->
-<#--            </div>-->
-<#--        </div>-->
-<#--    </div>-->
      <hr>
     <div class="container" style="max-width: 100%">
         <div class="row" style="max-width: 100%">
@@ -209,6 +188,7 @@
                 <div class="col-sm-2">
                 <button type="submit" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleStorage">Переместить</button>
             </div>
+            <br>
             <br>
             <div class="col-sm-2">
                 <button type="submit" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#validQty">Изменить количество</button>

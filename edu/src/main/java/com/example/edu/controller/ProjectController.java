@@ -4,6 +4,7 @@ import com.example.edu.models.Work;
 import com.example.edu.repository.ImageRepository;
 import com.example.edu.repository.WorkRepository;
 import com.example.edu.services.EditWorkServices;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,6 +46,22 @@ public class ProjectController {
         }
         model.addAttribute("works", works);
         return "works";
+    }
+
+    @GetMapping("/m")
+    public String mworks (@RequestParam(name = "storage", required = false) String storage, HttpServletResponse response, Model model) {
+        response.setHeader("Cache-Control", "no-cache no-store must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
+        List<Work> mworks;;
+
+        if (storage != null && !storage.isEmpty()){
+            mworks = workRepository.findByStorageIgnoreCase(storage);
+        } else {
+            mworks = workRepository.findAll();
+        }
+        model.addAttribute("mworks", mworks);
+        return "mworks";
     }
 
     @GetMapping("/work/{id}")
