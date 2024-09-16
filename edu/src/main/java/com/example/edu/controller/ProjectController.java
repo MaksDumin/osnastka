@@ -98,4 +98,16 @@ public class ProjectController {
         }
         return "redirect:/";
     }
+    @PostMapping("/work/update-qty/{id}")
+    public String updateQty(@PathVariable String id, @RequestParam int qty, RedirectAttributes redirectAttributes) {
+        Work work = editWorkServices.getWorkById(id);
+        if (work != null) {
+            work.setQty(qty);
+            editWorkServices.updateWork(work);
+            redirectAttributes.addFlashAttribute("successMessage", "Количество успешно обновлено");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage","Запись не найдена");
+        }
+        return "redirect:/work/" + id;
+    }
 }

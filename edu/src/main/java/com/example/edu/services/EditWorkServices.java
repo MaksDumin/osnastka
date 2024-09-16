@@ -118,6 +118,7 @@ public class EditWorkServices {
         }
         workRepository.save(work);
     }
+
 @Transactional
     public void handleStorageUpdate(Work exisitngWork, String newStorage, String newAddress, int quantityToMove, MultipartFile file1) throws IOException {
         int updateQty = exisitngWork.getQty() - quantityToMove;
